@@ -34,5 +34,9 @@ public class Grafo<T1, T2> {
         }
     }
 
+    public void addNodo(int id, T1 info) {
+        listaNodos.set(id, new Nodo(id, info));
+    }
+
 
 }
