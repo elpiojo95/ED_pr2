@@ -7,7 +7,7 @@ public class Grafo<T1, T2> {
     private ArrayList<Nodo> listaNodos;
 
     public  Grafo(int nNodos) {
-        this.listaNodos = new ArrayList<>(nNodos);
+        this.listaNodos = new ArrayList<>(nNodos+1);
     }
 
     private class Nodo {
@@ -23,9 +23,9 @@ public class Grafo<T1, T2> {
     }
 
     private class Enlace {
-        int nodoA;
-        int nodoB;
-        T2 peso;
+        private int nodoA;
+        private int nodoB;
+        private T2 peso;
 
         public Enlace(int nodoA, int nodoB, T2 peso) {
             this.nodoA = nodoA;
