@@ -7,7 +7,10 @@ public class Grafo<T1, T2> {
     private ArrayList<Nodo> listaNodos;
 
     public  Grafo(int nNodos) {
-        this.listaNodos = new ArrayList<>(nNodos+1);
+        this.listaNodos = new ArrayList<>();
+        for (int i = 0; i <= nNodos; i++){
+            this.listaNodos.add(null);
+        }
     }
 
     private class Nodo {
@@ -19,6 +22,10 @@ public class Grafo<T1, T2> {
             this.id = id;
             this.info = info;
             this.listaDeEnlaces = new LinkedList<>();
+        }
+
+        public String toString(){
+            return Integer.toString(this.id);
         }
     }
 
@@ -32,13 +39,23 @@ public class Grafo<T1, T2> {
             this.nodoB = nodoB;
             this.peso = peso;
         }
+
+        public String toString(){
+            return "[" +Integer.toString(nodoA) +","
+                    + Integer.toString(nodoB) +","
+                    +this.peso.toString() +"]";
+        }
     }
 
     public void addNodo(int id, T1 info) {
+        Nodo temp = new Nodo(id, info);
         if (listaNodos.get(id) == null) {
-            listaNodos.set(id, new Nodo(id, info));
+            listaNodos.set(id, temp);
         }
         else System.out.println("Nodo repetido. ID = " + id);
+    }
+    public void addNodo(int id) {
+        this.addNodo(id, null);
     }
 
     public void addEnlace(int nodoA, int nodoB, T2 peso) {
@@ -54,6 +71,14 @@ public class Grafo<T1, T2> {
             listaNodos.get(nodoA).listaDeEnlaces.add(temp);
             listaNodos.get(nodoB).listaDeEnlaces.add(temp);
         }
+    }
+
+    public void mostrarListaNodos(){
+        System.out.println(listaNodos.toString());
+    }
+
+    public void mostrarEnlaces(int nodoID){
+        System.out.println(listaNodos.get(nodoID).listaDeEnlaces.toString());
     }
 
 
