@@ -6,9 +6,17 @@ import javax.lang.model.type.NullType;
 
 public class PruebasGrafos {
     public static void main(String[] args) {
+        //Ficheros
+        String[] nets = new String[5];
+        nets[0] = "networks\\basico.net";
+        nets[1] = "networks\\airports_UW.net";
+        nets[2] = "networks\\email_URV-edges_betw.net";
+        nets[3] = "networks\\powergrid_USA-edges_betw.net";
+        nets[4] = "networks\\wtw2000-sym.net";
         //Crear Grafo
-        Grafo<NullType, Double> grafoTest1 = new Grafo<NullType, Double>(2);
+        Grafo<NullType, Double> grafoTest1 = new Grafo<NullType, Double>(nets[1]);
 
+        /*
         //Crear nodos
         grafoTest1.addNodo(1);
         grafoTest1.addNodo(2,null);
@@ -30,5 +38,6 @@ public class PruebasGrafos {
         grafoTest1.addEnlace(2,1,3.0);
         //rafoTest1.addEnlace(1,2,2.4);
         grafoTest1.mostrarEnlaces(2);
+ */
     }
 }
