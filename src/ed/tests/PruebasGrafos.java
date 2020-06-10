@@ -25,5 +25,10 @@ public class PruebasGrafos {
         //enlaces repetidos
         grafoTest1.addEnlace(1,2,2.4);
         grafoTest1.mostrarEnlaces(1);
+        grafoTest1.addEnlace(1,2,3.0);
+        grafoTest1.mostrarEnlaces(1);
+        grafoTest1.addEnlace(2,1,3.0);
+        //rafoTest1.addEnlace(1,2,2.4);
+        grafoTest1.mostrarEnlaces(2);
     }
 }

@@ -59,17 +59,26 @@ public class Grafo<T1, T2> {
     }
 
     public void addEnlace(int nodoA, int nodoB, T2 peso) {
+        int idx=0, size;
         Enlace temp = new Enlace(nodoA, nodoB, peso);
         Enlace tempInverso = new Enlace(nodoB, nodoA, peso);
-        if (listaNodos.get(nodoA).listaDeEnlaces.contains(temp)) {
-            System.out.println("Enlace ya existente. N1 =" + nodoA + "N2 =" + nodoB);
-        }
-        else if (listaNodos.get(nodoA).listaDeEnlaces.contains(tempInverso)){
-            System.out.println("Enlace ya existente. N1 =" + nodoB + "N2 =" + nodoA);
-        }
-        else {
+
+        size = listaNodos.get(nodoA).listaDeEnlaces.size();
+        System.out.println("tam:" +size);
+        if (size == 0){
             listaNodos.get(nodoA).listaDeEnlaces.add(temp);
-            listaNodos.get(nodoB).listaDeEnlaces.add(temp);
+            listaNodos.get(nodoB).listaDeEnlaces.add(tempInverso);
+        }else {
+            while ((listaNodos.get(nodoA).listaDeEnlaces.get(idx).nodoB != nodoB) && (idx < size)){
+                idx++;
+            }
+            if (idx < size){
+                System.out.println("Enlace ya existente. N1 = " + nodoA + ", N2 = " + nodoB);
+            }else {
+                listaNodos.get(nodoA).listaDeEnlaces.add(temp);
+                listaNodos.get(nodoB).listaDeEnlaces.add(tempInverso);
+            }
+            idx=0;
         }
     }
 
