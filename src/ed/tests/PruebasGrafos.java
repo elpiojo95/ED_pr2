@@ -14,7 +14,8 @@ public class PruebasGrafos {
         nets[3] = "networks\\powergrid_USA-edges_betw.net";
         nets[4] = "networks\\wtw2000-sym.net";
         //Crear Grafo
-        Grafo<NullType, Double> grafoTest1 = new Grafo<NullType, Double>(nets[1]);
+        Grafo<NullType> grafoTest1 = new Grafo<NullType>(nets[0]);
+
 
         /*
         //Crear nodos

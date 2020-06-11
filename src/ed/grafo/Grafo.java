@@ -2,12 +2,13 @@ package ed.grafo;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Grafo<T1, T2> {
+public class Grafo<T1> {
     private ArrayList<Nodo> listaNodos;
     private int nNodos;
 
@@ -76,7 +77,7 @@ public class Grafo<T1, T2> {
     private class Enlace {
         private int nodoA;
         private int nodoB;
-        private T2 peso;
+        private Double peso;
 
         /**
          * Constructor de Enlace
@@ -84,7 +85,7 @@ public class Grafo<T1, T2> {
          * @param nodoB destino
          * @param peso peso
          */
-        public Enlace(int nodoA, int nodoB, T2 peso) {
+        public Enlace(int nodoA, int nodoB, Double peso) {
             this.nodoA = nodoA;
             this.nodoB = nodoB;
             this.peso = peso;
@@ -97,7 +98,7 @@ public class Grafo<T1, T2> {
         public String toString(){
             return "[" +nodoA +","
                     + nodoB +","
-                    +this.peso.toString() +"]";
+                    +peso +"]";
         }
     }
 
@@ -128,26 +129,25 @@ public class Grafo<T1, T2> {
      * @param nodoB destino
      * @param peso peso
      */
-    public void addEnlace(int nodoA, int nodoB, T2 peso) {
-        int idx=0, size;
+    public void addEnlace(int nodoA, int nodoB, Double peso) {
+        int size;
+        boolean add = false;
         Enlace temp = new Enlace(nodoA, nodoB, peso);
         Enlace tempInverso = new Enlace(nodoB, nodoA, peso);
 
         size = listaNodos.get(nodoA).listaDeEnlaces.size();
-        System.out.println("tam:" +size);
         if (size == 0){
             listaNodos.get(nodoA).listaDeEnlaces.add(temp);
             listaNodos.get(nodoB).listaDeEnlaces.add(tempInverso);
         }else {
-            while ((listaNodos.get(nodoA).listaDeEnlaces.get(idx).nodoB != nodoB) && (idx < size)){
-                idx++;
+            for (int idx = 0; idx<size; idx++){
+                if (nodoB == listaNodos.get(nodoA).listaDeEnlaces.get(idx).nodoB) add = true;
             }
-            if (idx < size){
-                System.out.println("Enlace ya existente. N1 = " + nodoA + ", N2 = " + nodoB);
-            }else {
+            if (!add){
                 listaNodos.get(nodoA).listaDeEnlaces.add(temp);
                 listaNodos.get(nodoB).listaDeEnlaces.add(tempInverso);
-            }
+            }else System.out.println("Enlace ya existente. N1 = " + nodoA + ", N2 = " + nodoB);
+
         }
     }
 
