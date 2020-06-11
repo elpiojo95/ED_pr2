@@ -125,7 +125,6 @@ public class Grafo<T1> {
      */
     public void addEnlace(int nodoA, int nodoB, Double peso) {
         int size;
-        boolean existe;
         Enlace temp = new Enlace(nodoB, peso);
         Enlace tempInverso = new Enlace(nodoA, peso);
 
@@ -134,8 +133,7 @@ public class Grafo<T1> {
             listaNodos.get(nodoA).listaDeEnlaces.add(temp);
             listaNodos.get(nodoB).listaDeEnlaces.add(tempInverso);
         }else {
-            existe = enlaceExiste(nodoA,nodoB,size);
-            if (!existe){
+            if (!enlaceExiste(nodoA,nodoB,size)){
                 listaNodos.get(nodoA).listaDeEnlaces.add(temp);
                 listaNodos.get(nodoB).listaDeEnlaces.add(tempInverso);
             }else System.out.println("Enlace ya existente. N1 = " + nodoA + ", N2 = " + nodoB);
@@ -196,5 +194,4 @@ public class Grafo<T1> {
         }
         return false;
     }
-
 }
