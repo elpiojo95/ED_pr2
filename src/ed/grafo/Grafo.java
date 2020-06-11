@@ -1,9 +1,7 @@
 package ed.grafo;
 
-import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -76,18 +74,15 @@ public class Grafo<T1> {
      * Clase Enlace, almacena la relacion etre dos nodos y el peso
      */
     private class Enlace {
-        private int nodoA;
         private int nodoB;
         private Double peso;
 
         /**
          * Constructor de Enlace
-         * @param nodoA origen
          * @param nodoB destino
          * @param peso peso
          */
-        public Enlace(int nodoA, int nodoB, Double peso) {
-            this.nodoA = nodoA;
+        public Enlace(int nodoB, Double peso) {
             this.nodoB = nodoB;
             this.peso = peso;
         }
@@ -97,8 +92,7 @@ public class Grafo<T1> {
          * @return String
          */
         public String toString(){
-            return "[" +nodoA +","
-                    + nodoB +","
+            return "[" + nodoB +","
                     +peso +"]";
         }
     }
@@ -126,15 +120,14 @@ public class Grafo<T1> {
 
     /**
      * Metodo para añadir un enlace entre dos nodos
-     * @param nodoA origen
      * @param nodoB destino
      * @param peso peso
      */
     public void addEnlace(int nodoA, int nodoB, Double peso) {
         int size;
         boolean existe;
-        Enlace temp = new Enlace(nodoA, nodoB, peso);
-        Enlace tempInverso = new Enlace(nodoB, nodoA, peso);
+        Enlace temp = new Enlace(nodoB, peso);
+        Enlace tempInverso = new Enlace(nodoA, peso);
 
         size = listaNodos.get(nodoA).listaDeEnlaces.size();
         if (size == 0){
