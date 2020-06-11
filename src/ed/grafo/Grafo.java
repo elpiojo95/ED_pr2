@@ -159,11 +159,19 @@ public class Grafo<T1> {
         Pattern p = Pattern.compile("^[\\s]*([\\d]*)[\\s]*([^\\r\\n]*)?");
         Matcher m;
         for (int i = 0; i < this.nNodos; i++) {
-            String st = sc.nextLine();
-            m = p.matcher(st);
+            m = p.matcher(sc.nextLine());
             if (m.matches()) this.addNodo(Integer.parseInt(m.group(1)));
         }
-        //TODO leer enlaces y crearlos
+        sc.nextLine();
+        p = Pattern.compile("^[\\s]*([\\d]*)[\\s]*([\\d]*)[\\s]*([\\d]*.[\\d]*)");
+        while (sc.hasNextLine()) {
+            m = p.matcher(sc.nextLine());
+            if (m.matches()) {
+                this.addEnlace(Integer.parseInt(m.group(1)),
+                        Integer.parseInt(m.group(2)),
+                        Double.parseDouble(m.group(3)));
+            }
+        }
         sc.close();
 
     }
