@@ -1,5 +1,6 @@
 package ed.grafo;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -131,7 +132,7 @@ public class Grafo<T1> {
      */
     public void addEnlace(int nodoA, int nodoB, Double peso) {
         int size;
-        boolean add = false;
+        boolean existe;
         Enlace temp = new Enlace(nodoA, nodoB, peso);
         Enlace tempInverso = new Enlace(nodoB, nodoA, peso);
 
@@ -140,10 +141,8 @@ public class Grafo<T1> {
             listaNodos.get(nodoA).listaDeEnlaces.add(temp);
             listaNodos.get(nodoB).listaDeEnlaces.add(tempInverso);
         }else {
-            for (int idx = 0; idx<size; idx++){
-                if (nodoB == listaNodos.get(nodoA).listaDeEnlaces.get(idx).nodoB) add = true;
-            }
-            if (!add){
+            existe = enlaceExiste(nodoA,nodoB,size);
+            if (!existe){
                 listaNodos.get(nodoA).listaDeEnlaces.add(temp);
                 listaNodos.get(nodoB).listaDeEnlaces.add(tempInverso);
             }else System.out.println("Enlace ya existente. N1 = " + nodoA + ", N2 = " + nodoB);
@@ -189,4 +188,20 @@ public class Grafo<T1> {
     public void mostrarEnlaces(int nodoID){
         System.out.println(listaNodos.get(nodoID).listaDeEnlaces.toString());
     }
+
+    /**
+     * Metodo para comprovar si este enlace existe
+     * @param nodoA origen
+     * @param nodoB destino
+     * @param sizeEnlaces tamaño listaEnlaces del nodo de origen
+     */
+    public Boolean enlaceExiste(int nodoA, int nodoB, int sizeEnlaces){
+        for (int idx = 0; idx< sizeEnlaces; idx++){
+            if (nodoB == listaNodos.get(nodoA).listaDeEnlaces.get(idx).nodoB){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
