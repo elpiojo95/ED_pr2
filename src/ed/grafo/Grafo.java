@@ -173,7 +173,6 @@ public class Grafo<T1> {
             }
         }
         sc.close();
-
     }
 
     /**
@@ -190,5 +189,4 @@ public class Grafo<T1> {
     public void mostrarEnlaces(int nodoID){
         System.out.println(listaNodos.get(nodoID).listaDeEnlaces.toString());
     }
-
 }
