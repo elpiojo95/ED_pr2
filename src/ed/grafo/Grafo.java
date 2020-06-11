@@ -2,9 +2,10 @@ package ed.grafo;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Grafo<T1, T2> {
     private ArrayList<Nodo> listaNodos;
@@ -155,16 +156,14 @@ public class Grafo<T1, T2> {
      * @param sc scanner
      */
     private void cargarNetwork(Scanner sc) {
-        sc.useDelimiter(" ");
+        Pattern p = Pattern.compile("^[\\s]*([\\d]*)[\\s]*([^\\r\\n]*)?");
+        Matcher m;
         for (int i = 0; i < this.nNodos; i++) {
             String st = sc.nextLine();
-            String[] stAr = st.split(" ");
-            int j = 0;
-            while (stAr[j].equals("")) j++;
-            this.addNodo(Integer.parseInt(stAr[j]));
-
-            //TODO leer enlaces y crearlos
+            m = p.matcher(st);
+            if (m.matches()) this.addNodo(Integer.parseInt(m.group(1)));
         }
+        //TODO leer enlaces y crearlos
         sc.close();
 
     }
