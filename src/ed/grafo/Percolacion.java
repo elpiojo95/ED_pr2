@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Percolacion<T> {
     private Grafo<T> g;
     private ArrayList<Boolean> listaNodosActivos;
+    private int nNodosActivos;
 
 
     public Percolacion(Grafo<T> g) {
@@ -14,6 +15,7 @@ public class Percolacion<T> {
         for (int i = 1; i <= g.getnNodos() ; i++) {
             this.listaNodosActivos.add(true);
         }
+        this.nNodosActivos = g.getnNodos();
     }
 
 
