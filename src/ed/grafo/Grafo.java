@@ -97,6 +97,14 @@ public class Grafo<T1> {
         public int getId() {
             return id;
         }
+
+        /**
+         * getter información del nodo
+         * @return info
+         */
+        public T1 getInfo() {
+            return info;
+        }
     }
 
     /**
@@ -123,6 +131,14 @@ public class Grafo<T1> {
         public String toString(){
             return "[" + nodoB +","
                     +peso +"]";
+        }
+
+        /**
+         * getter del peso del enlace
+         * @return peso
+         */
+        public Double getPeso() {
+            return peso;
         }
     }
 
@@ -231,6 +247,5 @@ public class Grafo<T1> {
         }
         return false;
     }
-
 
 }
