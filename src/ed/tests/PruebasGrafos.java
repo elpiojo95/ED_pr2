@@ -29,7 +29,7 @@ public class PruebasGrafos {
         System.out.println("TEST1: FUNCIONAMIENTO CORRECTO");
         System.out.println("basico.net");
         Grafo<NullType> gTest1 = new Grafo<NullType>(nets[0]);
-        gTest1.mostrarListaNodos();
+        imprimirRed(gTest1);
         System.out.println();
 
         /*
@@ -39,7 +39,7 @@ public class PruebasGrafos {
         System.out.println("TEST2: FUNCIONAMIENTO CORRECTO");
         System.out.println("airports_UW.net");
         Grafo<NullType> gTest2 = new Grafo<NullType>(nets[1]);
-        gTest2.mostrarListaNodos();
+        imprimirRed(gTest2);
         System.out.println();
 
         /*
@@ -49,7 +49,7 @@ public class PruebasGrafos {
         System.out.println("TEST3: FUNCIONAMIENTO CORRECTO");
         System.out.println("email_URV-edges_betw.net");
         Grafo<NullType> gTest3 = new Grafo<NullType>(nets[2]);
-        gTest3.mostrarListaNodos();
+        imprimirRed(gTest3);
         System.out.println();
 
         /*
@@ -59,7 +59,7 @@ public class PruebasGrafos {
         System.out.println("TEST4: ERROR ENLACES REPETIDOS");
         System.out.println("enlaces_repetidos.net");
         Grafo<NullType> gTest4 = new Grafo<NullType>(nets[5]);
-        gTest4.mostrarListaNodos();
+        imprimirRed(gTest4);
         System.out.println();
 
         /*
@@ -69,7 +69,7 @@ public class PruebasGrafos {
         System.out.println("TEST5: ERROR NODO DE ORIGEN NO CREADO");
         System.out.println("nodo_origen_no_creado.net");
         Grafo<NullType> gTest5 = new Grafo<NullType>(nets[6]);
-        gTest5.mostrarListaNodos();
+        imprimirRed(gTest5);
         System.out.println();
 
         /*
@@ -79,7 +79,7 @@ public class PruebasGrafos {
         System.out.println("TEST6: ERROR NODO DE DESTINO NO CREADO");
         System.out.println("nodo_destino_no_creado.net");
         Grafo<NullType> gTest6 = new Grafo<NullType>(nets[7]);
-        gTest6.mostrarListaNodos();
+        imprimirRed(gTest6);
         System.out.println();
 
         /*
@@ -89,6 +89,14 @@ public class PruebasGrafos {
         System.out.println("TEST7: TODOS LOS ERRORES");
         System.out.println("errores.net");
         Grafo<NullType> gTest7 = new Grafo<NullType>(nets[8]);
-        gTest7.mostrarListaNodos();
+        imprimirRed(gTest7);
+    }
+
+    public static void imprimirRed(Grafo<NullType> g){
+        g.mostrarListaNodos();
+        for (int i = 1; i <= g.getnNodos(); i++) {
+            System.out.print("nodo " +i +" -> ");
+            g.mostrarEnlaces(i);
+        }
     }
 }
