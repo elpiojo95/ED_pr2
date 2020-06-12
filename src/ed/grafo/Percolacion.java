@@ -1,21 +1,31 @@
 package ed.grafo;
 
+import java.util.ArrayList;
+
 public class Percolacion<T> {
-    Grafo<T> g;
-    // TODO crear lista de nodos activos
+    private Grafo<T> g;
+    private ArrayList<Boolean> listaNodosActivos;
+
 
     public Percolacion(Grafo<T> g) {
-        this.g = g.copy();
+        this.g = new Grafo<T>(g)
+        this.listaNodosActivos = new ArrayList<>();
+        this.listaNodosActivos.add(false);
+        for (int i = 1; i <= g.getnNodos() ; i++) {
+            this.listaNodosActivos.add(true);
+        }
     }
+
 
     public void evaluar() {
         //TODO evaluar la red
     }
 
-    /*TODO crear metodo que haga todo el bucle de la percolacio
-        publico y con eleccion de tipo de eliminacion
-     */
-
+    public void evaluacionPercolacion(){
+        /*TODO crear metodo que haga todo el bucle de la percolacio
+           publico y con eleccion de tipo de eliminacion
+        */
+    }
 
     private int eliminarNodoAleatorio() {
         //TODO elinar un nodo aleatorio de la red "quitar todos sus enlaces"
