@@ -127,17 +127,21 @@ public class Grafo<T1> {
         int size;
         Enlace temp = new Enlace(nodoB, peso);
         Enlace tempInverso = new Enlace(nodoA, peso);
-
-        size = listaNodos.get(nodoA).listaDeEnlaces.size();
-        if (size == 0){
-            listaNodos.get(nodoA).listaDeEnlaces.add(temp);
-            listaNodos.get(nodoB).listaDeEnlaces.add(tempInverso);
+        if (this.nNodos < nodoA){
+            System.out.println("Error: nodo " +nodoA +" no existe.");
+        }else if (this.nNodos < nodoB){
+            System.out.println("Error: nodo " +nodoB +" no existe.");
         }else {
-            if (!enlaceExiste(nodoA,nodoB,size)){
+            size = listaNodos.get(nodoA).listaDeEnlaces.size();
+            if (size == 0){
                 listaNodos.get(nodoA).listaDeEnlaces.add(temp);
                 listaNodos.get(nodoB).listaDeEnlaces.add(tempInverso);
-            }else System.out.println("Enlace ya existente. N1 = " + nodoA + ", N2 = " + nodoB);
-
+            }else {
+                if (!enlaceExiste(nodoA,nodoB,size)){
+                    listaNodos.get(nodoA).listaDeEnlaces.add(temp);
+                    listaNodos.get(nodoB).listaDeEnlaces.add(tempInverso);
+                }else System.out.println("Enlace ya existente. N1 = " + nodoA + ", N2 = " + nodoB);
+            }
         }
     }
 
@@ -194,4 +198,6 @@ public class Grafo<T1> {
         }
         return false;
     }
+
+
 }
