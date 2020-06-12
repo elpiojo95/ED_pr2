@@ -42,6 +42,11 @@ public class Grafo<T1> {
         }
     }
 
+    public Grafo(Grafo<T1> other) {
+        this.listaNodos = new ArrayList<>(other.listaNodos);
+        this.nNodos = other.nNodos;
+    }
+
     /**
      * getter de nNodos
      * @return nNodos
@@ -128,10 +133,14 @@ public class Grafo<T1> {
      */
     public void addNodo(int id, T1 info) {
         Nodo temp = new Nodo(id, info);
-        if (listaNodos.get(id) == null) {
-            listaNodos.set(id, temp);
+        if (id > nNodos) {
+            System.out.println("Nodo Fuera de limites. ID = " + id);
         }
-        else System.out.println("Nodo repetido. ID = " + id);
+        else {
+            if (listaNodos.get(id) == null) {
+                listaNodos.set(id, temp);
+            } else System.out.println("Nodo repetido. ID = " + id);
+        }
     }
 
     /**
