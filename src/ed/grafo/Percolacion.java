@@ -6,6 +6,10 @@ public class Percolacion<T> {
     private Grafo<T> g;
     private ArrayList<Boolean> listaNodosActivos;
     private int nNodosActivos;
+    private double op;
+    private double ncc;
+    private double gcc;
+    private double slcc;
 
 
     public Percolacion(Grafo<T> g) {
@@ -16,6 +20,7 @@ public class Percolacion<T> {
             this.listaNodosActivos.add(true);
         }
         this.nNodosActivos = g.getnNodos();
+        this.evaluar();
     }
 
 
