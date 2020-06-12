@@ -25,7 +25,17 @@ public class Percolacion<T> {
 
 
     public void evaluar() {
-        //TODO evaluar la red
+        // Calcular op
+        int count = 0;
+        for (Boolean b : listaNodosActivos) {
+            if (b) {
+                count++;
+            }
+        }
+        op = count;
+        //TODO calcular ncc
+        //TODO calcular gcc
+        //TODO calcular slcc
     }
 
     public void evaluacionPercolacion(){
@@ -52,4 +62,19 @@ public class Percolacion<T> {
         return idNodoEliminado;
     }
 
+    public double getOp() {
+        return op;
+    }
+
+    public double getNcc() {
+        return ncc;
+    }
+
+    public double getGcc() {
+        return gcc;
+    }
+
+    public double getSlcc() {
+        return slcc;
+    }
 }
