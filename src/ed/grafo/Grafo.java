@@ -43,7 +43,23 @@ public class Grafo<T1> {
     }
 
     /**
-     * Clase Nodo, contine el identificador del nodo, su informacion y sus enlaces
+     * getter de nNodos
+     * @return nNodos
+     */
+    public int getnNodos() {
+        return nNodos;
+    }
+
+    /**
+     * getter listaNodos
+     * @return listaNodos
+     */
+    public ArrayList<Nodo> getListaNodos() {
+        return listaNodos;
+    }
+
+    /**
+     * Clase Nodo, contiene el identificador del nodo, su informacion y sus enlaces
      */
     private class Nodo {
         private int id;
@@ -67,6 +83,14 @@ public class Grafo<T1> {
          */
         public String toString(){
             return Integer.toString(this.id);
+        }
+
+        /**
+         * getter Id del nodo
+         * @return id
+         */
+        public int getId() {
+            return id;
         }
     }
 
