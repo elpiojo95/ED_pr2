@@ -15,7 +15,7 @@ public class Grafo<T1> {
      * Constructor de Grafo
      * @param nNodos nNodos
      */
-    public  Grafo(int nNodos) {
+    public Grafo(int nNodos) {
         this.listaNodos = new ArrayList<>();
         for (int i = 0; i <= nNodos; i++){
             this.listaNodos.add(null);
@@ -27,7 +27,7 @@ public class Grafo<T1> {
      * Constructor de Grafo desde fichero
      * @param filePath Path del fichero .net
      */
-    public  Grafo(String filePath) {
+    public Grafo(String filePath) {
         Scanner sc;
         this.listaNodos = new ArrayList<>();
         try {
