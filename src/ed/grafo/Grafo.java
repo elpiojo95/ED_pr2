@@ -241,8 +241,27 @@ public class Grafo<T1> {
         this.listaNodos.get(idNodo).listaDeEnlaces.clear();
     }
 
+    /**
+     * metodo que retorna el grado del nodo con indice que le pasamos por parametro
+     * @param idNodo: identificador del nodo
+     * @return grado del nodo
+     */
     public int gradoNodo(int idNodo){
         return this.listaNodos.get(idNodo).listaDeEnlaces.size();
+    }
+
+    /**
+     * metodo que me retorna el peso total de todos los enlaces del nodo pasado por parametro
+     * @param idNodo
+     * @return
+     */
+    public double pesoTotalEnlacesNodo(int idNodo){
+        double pesoTot = 0;
+        int tam = this.listaNodos.get(idNodo).listaDeEnlaces.size();
+        for (int i = 0; i < tam; i++) {
+            pesoTot = pesoTot + listaNodos.get(idNodo).listaDeEnlaces.get(i).peso;
+        }
+        return pesoTot;
     }
 
     /**

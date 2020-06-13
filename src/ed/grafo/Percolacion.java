@@ -85,8 +85,24 @@ public class Percolacion<T> {
     }
 
     private int eliminarNodoStr() {
-        //TODO elinar el nodo de mayor strengh de la red "quitar todos sus enlaces"
+        //encontrar idNodo con mas strength y actualizar listaNodosActivos
+        int idNodoEliminado = 0, j = 0;
+        double maxStr = 0;
+        for (int i = 0; i < this.nNodosActivos; i++) {
+            while (!this.listaNodosActivos.get(j)){
+                j++;
+            }
+            if (this.g.pesoTotalEnlacesNodo(j) > maxStr){
+                maxStr = this.g.pesoTotalEnlacesNodo(j);
+                idNodoEliminado = j;
+            }
+            j++;
+        }
+        this.nNodosActivos--;
+        this.listaNodosActivos.set(idNodoEliminado, false);
 
+        //eliminar Enlaces de idNodoEliminado
+        this.g.eliminarEnlace(idNodoEliminado);
         return idNodoEliminado;
     }
 
