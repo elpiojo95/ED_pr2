@@ -234,6 +234,14 @@ public class Grafo<T1> {
     }
 
     /**
+     * metodo para eliminar los enlaces de un nodo
+     * @param idNodo: identificador de nodo
+     */
+    public void eliminarEnlace(int idNodo){
+        this.listaNodos.get(idNodo).listaDeEnlaces.clear();
+    }
+
+    /**
      * Metodo para comprovar si este enlace existe
      * @param nodoA origen
      * @param nodoB destino

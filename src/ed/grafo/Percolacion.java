@@ -1,5 +1,6 @@
 package ed.grafo;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class Percolacion<T> {
@@ -13,7 +14,7 @@ public class Percolacion<T> {
 
 
     public Percolacion(Grafo<T> g) {
-        this.g = new Grafo<T>(g)
+        this.g = new Grafo<>(g);
         this.listaNodosActivos = new ArrayList<>();
         this.listaNodosActivos.add(false);
         for (int i = 1; i <= g.getnNodos() ; i++) {
@@ -42,15 +43,30 @@ public class Percolacion<T> {
         /*TODO crear metodo que haga todo el bucle de la percolacio
            publico y con eleccion de tipo de eliminacion
         */
+
     }
 
     private int eliminarNodoAleatorio() {
         //TODO elinar un nodo aleatorio de la red "quitar todos sus enlaces"
-        int idNodoEliminado;
+        int idNodoEliminado = 0;
+        //generar el nodo aleatorio i actualizar la lista de nodos activos
+        int idRand = (int) (Math.random() * this.nNodosActivos + 1);
+        for (int i = 0; i < idRand ; i++) {
+            if (this.listaNodosActivos.get(idNodoEliminado)){
+                idNodoEliminado++;
+            }
+            while (!this.listaNodosActivos.get(idNodoEliminado)) {
+                idNodoEliminado++;
+            }
+        }
+        this.listaNodosActivos.set(idNodoEliminado, false);
+        this.nNodosActivos--;
+        //eliminar enlaces
+        this.g.eliminarEnlace(idNodoEliminado);
         return idNodoEliminado;
     }
 
-    private int eliminarNodoGrado() {
+    /*private int eliminarNodoGrado() {
         //TODO elinar el nodo de mayor grado de la red "quitar todos sus enlaces"
         int idNodoEliminado;
         return idNodoEliminado;
@@ -76,5 +92,5 @@ public class Percolacion<T> {
 
     public double getSlcc() {
         return slcc;
-    }
+    }*/
 }
