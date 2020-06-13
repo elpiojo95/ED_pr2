@@ -241,6 +241,10 @@ public class Grafo<T1> {
         this.listaNodos.get(idNodo).listaDeEnlaces.clear();
     }
 
+    public int gradoNodo(int idNodo){
+        return this.listaNodos.get(idNodo).listaDeEnlaces.size();
+    }
+
     /**
      * Metodo para comprovar si este enlace existe
      * @param nodoA origen

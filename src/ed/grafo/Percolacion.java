@@ -39,15 +39,14 @@ public class Percolacion<T> {
         //TODO calcular slcc
     }
 
-    public void evaluacionPercolacion(){
+    public int evaluacionPercolacion(){
         /*TODO crear metodo que haga todo el bucle de la percolacio
            publico y con eleccion de tipo de eliminacion
         */
-
+        return this.eliminarNodoGrado();
     }
 
     private int eliminarNodoAleatorio() {
-        //TODO elinar un nodo aleatorio de la red "quitar todos sus enlaces"
         int idNodoEliminado = 0;
         //generar el nodo aleatorio i actualizar la lista de nodos activos
         int idRand = (int) (Math.random() * this.nNodosActivos + 1);
@@ -66,15 +65,30 @@ public class Percolacion<T> {
         return idNodoEliminado;
     }
 
-    /*private int eliminarNodoGrado() {
+    private int eliminarNodoGrado() {
         //TODO elinar el nodo de mayor grado de la red "quitar todos sus enlaces"
-        int idNodoEliminado;
+        int idNodoEliminado = 0, maxGrado = 0, j = 0;
+        //encontrar id nodo con mas grado y actualizar la listaNodosActivos
+        for (int i = 0; i < this.nNodosActivos ; i++) {
+            while (!this.listaNodosActivos.get(j)){
+                j++;
+            }
+            if (this.g.gradoNodo(j) > maxGrado){
+                maxGrado = this.g.gradoNodo(j);
+                idNodoEliminado = j;
+            }
+            j++;
+        }
+        this.nNodosActivos--;
+        this.listaNodosActivos.set(idNodoEliminado, false);
+        //eliminar Enlaces de idNodoEliminado
+        this.g.eliminarEnlace(idNodoEliminado);
         return idNodoEliminado;
     }
 
     private int eliminarNodoStr() {
         //TODO elinar el nodo de mayor strengh de la red "quitar todos sus enlaces"
-        int idNodoEliminado;
+
         return idNodoEliminado;
     }
 
@@ -92,5 +106,5 @@ public class Percolacion<T> {
 
     public double getSlcc() {
         return slcc;
-    }*/
+    }
 }
