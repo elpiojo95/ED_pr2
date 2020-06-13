@@ -39,11 +39,10 @@ public class Percolacion<T> {
         //TODO calcular slcc
     }
 
-    public int evaluacionPercolacion(){
+    public void evaluacionPercolacion(){
         /*TODO crear metodo que haga todo el bucle de la percolacio
            publico y con eleccion de tipo de eliminacion
         */
-        return this.eliminarNodoGrado();
     }
 
     private int eliminarNodoAleatorio() {
@@ -66,7 +65,6 @@ public class Percolacion<T> {
     }
 
     private int eliminarNodoGrado() {
-        //TODO elinar el nodo de mayor grado de la red "quitar todos sus enlaces"
         int idNodoEliminado = 0, maxGrado = 0, j = 0;
         //encontrar id nodo con mas grado y actualizar la listaNodosActivos
         for (int i = 0; i < this.nNodosActivos ; i++) {
