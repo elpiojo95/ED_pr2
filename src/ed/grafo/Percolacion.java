@@ -1,7 +1,7 @@
 package ed.grafo;
 
-import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Percolacion<T> {
     private Grafo<T> g;
@@ -21,22 +21,37 @@ public class Percolacion<T> {
             this.listaNodosActivos.add(true);
         }
         this.nNodosActivos = g.getnNodos();
+        this.op = 0;
+        this.ncc = 0;
+        this.gcc = 0;
+        this.slcc = 0;
         this.evaluar();
     }
 
-
     public void evaluar() {
+        op = 0; ncc = 0; gcc = 0; slcc = 0;
         // Calcular op
-        int count = 0;
-        for (Boolean b : listaNodosActivos) {
-            if (b) {
-                count++;
+        op = (double) nNodosActivos/g.getnNodos();
+        //DFS
+        ArrayList<Integer> explorados = new ArrayList<>();
+        while (explorados.size() < nNodosActivos) {
+            Stack<Nodo<T>> s = new Stack<>();
+            ncc++;
+            int cc = 0;
+            s.push(g.getListaNodos().get(listaNodosActivos.indexOf(true)));
+            while (!s.empty()) {
+                Nodo<T> n = s.pop();
+                if (!explorados.contains(n.getId())) {
+                    explorados.add(n.getId());
+                    cc++;
+                    for (Enlace enclace : n.getListaDeEnlaces()) {
+                        s.push(g.getListaNodos().get(enclace.getNodoB()));
+                    }
+                }
             }
+            this.actualizarGccSlcc(cc);
         }
-        op = count;
-        //TODO calcular ncc
-        //TODO calcular gcc
-        //TODO calcular slcc
+        ncc = ncc/g.getnNodos();
     }
 
     public void evaluacionPercolacion(){
@@ -100,10 +115,20 @@ public class Percolacion<T> {
         }
         this.nNodosActivos--;
         this.listaNodosActivos.set(idNodoEliminado, false);
-
         //eliminar Enlaces de idNodoEliminado
         this.g.getListaNodos().get(idNodoEliminado).eliminarEnlaces();
         return idNodoEliminado;
+    }
+
+    private void actualizarGccSlcc(int i) {
+        double d = (double) i / g.getnNodos();
+        if (d > this.gcc) {
+            this.slcc = this.gcc;
+            this.gcc = d;
+        }
+        else if (d > this.slcc) {
+            this.slcc = d;
+        }
     }
 
     public double getOp() {
