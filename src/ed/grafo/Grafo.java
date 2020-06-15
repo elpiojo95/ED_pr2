@@ -17,7 +17,7 @@ public class Grafo<T1> {
      */
     public Grafo(int nNodos) {
         this.listaNodos = new ArrayList<>();
-        for (int i = 0; i <= nNodos; i++){
+        for (int i = 0; i <= nNodos; i++) {
             this.listaNodos.add(null);
         }
         this.nNodos = nNodos;
@@ -43,8 +43,14 @@ public class Grafo<T1> {
     }
 
     public Grafo(Grafo<T1> other) {
-        this.listaNodos = new ArrayList<>(other.listaNodos);
         this.nNodos = other.nNodos;
+        this.listaNodos = new ArrayList<>();
+        for (Nodo n: other.listaNodos) {
+            if (n!=null) {
+                this.listaNodos.add(new Nodo(n));
+            }
+            else this.listaNodos.add(null);
+        }
     }
 
     /**
@@ -81,6 +87,15 @@ public class Grafo<T1> {
             this.info = info;
             this.listaDeEnlaces = new LinkedList<>();
         }
+
+        public Nodo (Nodo n) {
+            if (n != null) {
+                this.id = n.id;
+                this.info = n.info;
+                this.listaDeEnlaces = new LinkedList<>(n.listaDeEnlaces);
+            }
+        }
+
 
         /**
          * Metodo toSting
