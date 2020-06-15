@@ -60,7 +60,7 @@ public class Percolacion<T> {
         this.listaNodosActivos.set(idNodoEliminado, false);
         this.nNodosActivos--;
         //eliminar enlaces
-        this.g.eliminarEnlace(idNodoEliminado);
+        this.g.getListaNodos().get(idNodoEliminado).eliminarEnlaces();
         return idNodoEliminado;
     }
 
@@ -71,8 +71,8 @@ public class Percolacion<T> {
             while (!this.listaNodosActivos.get(j)){
                 j++;
             }
-            if (this.g.gradoNodo(j) > maxGrado){
-                maxGrado = this.g.gradoNodo(j);
+            if (this.g.getListaNodos().get(j).gradoNodo() > maxGrado){
+                maxGrado = this.g.getListaNodos().get(j).gradoNodo();
                 idNodoEliminado = j;
             }
             j++;
@@ -80,7 +80,7 @@ public class Percolacion<T> {
         this.nNodosActivos--;
         this.listaNodosActivos.set(idNodoEliminado, false);
         //eliminar Enlaces de idNodoEliminado
-        this.g.eliminarEnlace(idNodoEliminado);
+        this.g.getListaNodos().get(idNodoEliminado).eliminarEnlaces();
         return idNodoEliminado;
     }
 
@@ -92,8 +92,8 @@ public class Percolacion<T> {
             while (!this.listaNodosActivos.get(j)){
                 j++;
             }
-            if (this.g.pesoTotalEnlacesNodo(j) > maxStr){
-                maxStr = this.g.pesoTotalEnlacesNodo(j);
+            if (this.g.getListaNodos().get(j).pesoTotalEnlacesNodo() > maxStr){
+                maxStr = this.g.getListaNodos().get(j).pesoTotalEnlacesNodo();
                 idNodoEliminado = j;
             }
             j++;
@@ -102,7 +102,7 @@ public class Percolacion<T> {
         this.listaNodosActivos.set(idNodoEliminado, false);
 
         //eliminar Enlaces de idNodoEliminado
-        this.g.eliminarEnlace(idNodoEliminado);
+        this.g.getListaNodos().get(idNodoEliminado).eliminarEnlaces();
         return idNodoEliminado;
     }
 
