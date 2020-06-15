@@ -84,8 +84,6 @@ public class Percolacion<T> {
                     default:
                         nodoEliminado = this.eliminarNodoAleatorio();
                 }
-                // TODO Aqui va el codigo de mimi para eliminar los relacionados
-                System.out.println("id elim: " +nodoEliminado);
                 if (nodoEliminado != 0){
                     Nodo<T> n = this.g.getListaNodos().get(nodoEliminado);
                     for (int i = 0; i < n.getListaDeEnlaces().size() ; i++) {
@@ -132,13 +130,11 @@ public class Percolacion<T> {
     private int eliminarNodoGrado() {
         int idNodoEliminado = 0, maxGrado = 0, j = 0;
         //encontrar id nodo con mas grado y actualizar la listaNodosActivos
-        System.out.println("nodos activos: " +this.nNodosActivos);
         for (int i = 0; i < this.nNodosActivos ; i++) {
             while (!this.listaNodosActivos.get(j)){
                 j++;
             }
             if (this.g.getListaNodos().get(j).gradoNodo() >= maxGrado){
-                System.out.println("maxgrado: " +maxGrado);
                 maxGrado = this.g.getListaNodos().get(j).gradoNodo();
                 idNodoEliminado = j;
             }
