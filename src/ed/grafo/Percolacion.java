@@ -1,5 +1,7 @@
 package ed.grafo;
 
+import com.sun.source.tree.WhileLoopTree;
+
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -95,7 +97,18 @@ public class Percolacion<T> {
         this.nNodosActivos--;
         this.listaNodosActivos.set(idNodoEliminado, false);
         //eliminar Enlaces de idNodoEliminado
-        this.g.getListaNodos().get(idNodoEliminado).eliminarEnlaces();
+        Nodo<T> n = this.g.getListaNodos().get(idNodoEliminado);
+        for (int i = 0; i <n.getListaDeEnlaces().size() ; i++) {
+            int id = n.getListaDeEnlaces().get(i).getNodoB();
+            Nodo<T> dest = g.getListaNodos().get(id);
+            int k = 0;
+            while (dest.getListaDeEnlaces().get(k).getNodoB() != n.getId())
+            {
+                k++;
+            }
+            dest.getListaDeEnlaces().remove(k);
+        }
+        n.eliminarEnlaces();
         return idNodoEliminado;
     }
 
