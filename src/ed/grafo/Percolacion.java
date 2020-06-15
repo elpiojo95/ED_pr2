@@ -2,6 +2,9 @@ package ed.grafo;
 
 import com.sun.source.tree.WhileLoopTree;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -53,19 +56,45 @@ public class Percolacion<T> {
                     }
                 }
                 this.ncc++;
-                System.out.println("holi: " + cc);
                 this.actualizarGccSlcc(cc);
             }
         }
         this.ncc = this.ncc/g.getnNodos();
     }
-
-    public void evaluacionPercolacion(){
-        /*TODO crear metodo que haga todo el bucle de la percolacio
-           publico y con eleccion de tipo de eliminacion
-        */
-        System.out.println(this.eliminarNodoGrado());
-        this.evaluar();
+    public void evaluacionPercolacion(char c) {
+        try {
+            FileWriter outputfile = new FileWriter("out.csv");
+            outputfile.write("op,ncc,gcc,slcc\n");
+            outputfile.write(this.op + "," +
+                    this.ncc + "," +
+                    this.gcc + "," +
+                    this.slcc +"\n");
+            while (this.listaNodosActivos.contains(true)) {
+                int nodoEliminado;
+                switch (c) {
+                    case 'R':
+                        nodoEliminado = this.eliminarNodoAleatorio();
+                        break;
+                    case 'S':
+                        nodoEliminado = this.eliminarNodoStr();
+                        break;
+                    case 'D':
+                        nodoEliminado = this.eliminarNodoGrado();
+                        break;
+                    default:
+                        nodoEliminado = this.eliminarNodoAleatorio();
+                }
+                // TODO Aqui va el codigo de mimi para eliminar los relacionados
+                this.evaluar();
+                outputfile.write(this.op + "," +
+                        this.ncc + "," +
+                        this.gcc + "," +
+                        this.slcc + "\n");
+            }
+            outputfile.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private int eliminarNodoAleatorio() {
