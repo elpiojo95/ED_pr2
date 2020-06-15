@@ -31,35 +31,41 @@ public class Percolacion<T> {
     }
 
     public void evaluar() {
-        op = 0; ncc = 0; gcc = 0; slcc = 0;
+        this.op = 0; this.ncc = 0; this.gcc = 0; this.slcc = 0;
         // Calcular op
-        op = (double) nNodosActivos/g.getnNodos();
+        this.op = (double) nNodosActivos/g.getnNodos();
         //DFS
         ArrayList<Integer> explorados = new ArrayList<>();
-        while (explorados.size() < nNodosActivos) {
+        for (int i = 1; i < listaNodosActivos.size(); i++) {
             Stack<Nodo<T>> s = new Stack<>();
-            ncc++;
             int cc = 0;
-            s.push(g.getListaNodos().get(listaNodosActivos.indexOf(true)));
-            while (!s.empty()) {
-                Nodo<T> n = s.pop();
-                if (!explorados.contains(n.getId())) {
-                    explorados.add(n.getId());
-                    cc++;
-                    for (Enlace enclace : n.getListaDeEnlaces()) {
-                        s.push(g.getListaNodos().get(enclace.getNodoB()));
+            if (listaNodosActivos.get(i) && !explorados.contains(i)) {
+                Nodo<T> n = g.getListaNodos().get(i);
+                s.push(n);
+                while (!s.empty()) {
+                    n = s.pop();
+                    if (!explorados.contains(n.getId())) {
+                        explorados.add(n.getId());
+                        cc++;
+                        for (Enlace enclace : n.getListaDeEnlaces()) {
+                            s.push(g.getListaNodos().get(enclace.getNodoB()));
+                        }
                     }
                 }
+                this.ncc++;
+                System.out.println("holi: " + cc);
+                this.actualizarGccSlcc(cc);
             }
-            this.actualizarGccSlcc(cc);
         }
-        ncc = ncc/g.getnNodos();
+        this.ncc = this.ncc/g.getnNodos();
     }
 
     public void evaluacionPercolacion(){
         /*TODO crear metodo que haga todo el bucle de la percolacio
            publico y con eleccion de tipo de eliminacion
         */
+        System.out.println(this.eliminarNodoGrado());
+        this.evaluar();
     }
 
     private int eliminarNodoAleatorio() {
