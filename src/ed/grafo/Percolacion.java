@@ -85,6 +85,22 @@ public class Percolacion<T> {
                         nodoEliminado = this.eliminarNodoAleatorio();
                 }
                 // TODO Aqui va el codigo de mimi para eliminar los relacionados
+                System.out.println("id elim: " +nodoEliminado);
+                if (nodoEliminado != 0){
+                    Nodo<T> n = this.g.getListaNodos().get(nodoEliminado);
+                    for (int i = 0; i < n.getListaDeEnlaces().size() ; i++) {
+                        System.out.println("holi");
+                        int id = n.getListaDeEnlaces().get(i).getNodoB();
+                        Nodo<T> dest = g.getListaNodos().get(id);
+                        int k = 0;
+                        while (dest.getListaDeEnlaces().get(k).getNodoB() != n.getId())
+                        {
+                            k++;
+                        }
+                        dest.getListaDeEnlaces().remove(k);
+                    }
+                    n.eliminarEnlaces();
+                }
                 this.evaluar();
                 outputfile.write(this.op + "," +
                         this.ncc + "," +
@@ -117,10 +133,12 @@ public class Percolacion<T> {
     }
 
     private int eliminarNodoGrado() {
-        int idNodoEliminado = 0, maxGrado = 0, j = 0;
+        int idNodoEliminado = 0, maxGrado = 0, j = 1;
         //encontrar id nodo con mas grado y actualizar la listaNodosActivos
+        System.out.println("nodos activos: " +this.nNodosActivos);
         for (int i = 0; i < this.nNodosActivos ; i++) {
             while (!this.listaNodosActivos.get(j)){
+                System.out.println(this.listaNodosActivos.get(j));
                 j++;
             }
             if (this.g.getListaNodos().get(j).gradoNodo() > maxGrado){
@@ -131,19 +149,6 @@ public class Percolacion<T> {
         }
         this.nNodosActivos--;
         this.listaNodosActivos.set(idNodoEliminado, false);
-        //eliminar Enlaces de idNodoEliminado
-        Nodo<T> n = this.g.getListaNodos().get(idNodoEliminado);
-        for (int i = 0; i <n.getListaDeEnlaces().size() ; i++) {
-            int id = n.getListaDeEnlaces().get(i).getNodoB();
-            Nodo<T> dest = g.getListaNodos().get(id);
-            int k = 0;
-            while (dest.getListaDeEnlaces().get(k).getNodoB() != n.getId())
-            {
-                k++;
-            }
-            dest.getListaDeEnlaces().remove(k);
-        }
-        n.eliminarEnlaces();
         return idNodoEliminado;
     }
 
