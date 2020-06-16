@@ -26,7 +26,7 @@ public class PruebasPercolacion {
         nets[7] = "networks\\nodo_destino_no_creado.net";
         nets[8] = "networks\\errores.net";
 
-        Grafo<NullType> gTest1 = new Grafo<>(nets[0]);
+        Grafo<NullType> gTest1 = new Grafo<>(nets[2]);
         Percolacion<NullType> pTest1 = new Percolacion<>(gTest1);
         pTest1.evaluacionPercolacion('R');
 
@@ -35,10 +35,16 @@ public class PruebasPercolacion {
             double [][] matrix = new double [lineas.size()-1][4];
             Iterator<String> it = lineas.iterator();
             int j = 0;
-            it.next();
+            String s = it.next();
+            String[] str = s.split(",");
+            FileWriter f = new FileWriter("out.csv");
+            f.write(str[0] + ","
+                    + str[1] +","
+                    + str[2] +","
+                    + str[3] +"\n");
             while (it.hasNext()){
-                String s = it.next();
-                String[] str = s.split(",");
+                s = it.next();
+                str = s.split(",");
                 matrix[j][0] = Double.parseDouble(str[0]);
                 matrix[j][1] = Double.parseDouble(str[1]);
                 matrix[j][2] = Double.parseDouble(str[2]);
@@ -46,7 +52,7 @@ public class PruebasPercolacion {
                 j++;
             }
             for (int i = 1; i < 100; i++) {
-                gTest1 = new Grafo<>(nets[0]);
+                gTest1 = new Grafo<>(nets[2]);
                 pTest1 = new Percolacion<>(gTest1);
                 pTest1.evaluacionPercolacion('R');
                 lineas = Files.readAllLines(Paths.get("out.csv"));
@@ -54,8 +60,8 @@ public class PruebasPercolacion {
                 it.next();
                 j = 0;
                 while (it.hasNext()){
-                    String s = it.next();
-                    String[] str = s.split(",");
+                    s = it.next();
+                    str = s.split(",");
                     matrix[j][0] += Double.parseDouble(str[0]);
                     matrix[j][1] += Double.parseDouble(str[1]);
                     matrix[j][2] += Double.parseDouble(str[2]);
@@ -63,7 +69,6 @@ public class PruebasPercolacion {
                     j++;
                 }
             }
-            FileWriter f = new FileWriter("out.csv");
             for (int i = 0; i < lineas.size()-1 ; i++) {
                 f.write((matrix[i][0]/100) + ","
                         +(matrix[i][1]/100) +","
