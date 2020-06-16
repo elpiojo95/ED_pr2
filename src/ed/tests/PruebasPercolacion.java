@@ -3,6 +3,14 @@ package ed.tests;
 import ed.grafo.*;
 
 import javax.lang.model.type.NullType;
+import javax.swing.*;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
 
 public class PruebasPercolacion {
     public static void main(String[] args) {
@@ -20,9 +28,51 @@ public class PruebasPercolacion {
 
         Grafo<NullType> gTest1 = new Grafo<>(nets[0]);
         Percolacion<NullType> pTest1 = new Percolacion<>(gTest1);
-        System.out.println("OP: " +pTest1.getOp());
-        System.out.println("NCC: " +pTest1.getNcc());
-        System.out.println("GCC: " +pTest1.getGcc());
-        System.out.println("SLCC: " +pTest1.getSlcc());
+        pTest1.evaluacionPercolacion('R');
+
+        try {
+            List<String> lineas = Files.readAllLines(Paths.get("out.csv"));
+            double [][] matrix = new double [lineas.size()-1][4];
+            Iterator<String> it = lineas.iterator();
+            int j = 0;
+            it.next();
+            while (it.hasNext()){
+                String s = it.next();
+                String[] str = s.split(",");
+                matrix[j][0] = Double.parseDouble(str[0]);
+                matrix[j][1] = Double.parseDouble(str[1]);
+                matrix[j][2] = Double.parseDouble(str[2]);
+                matrix[j][3] = Double.parseDouble(str[3]);
+                j++;
+            }
+            for (int i = 1; i < 100; i++) {
+                gTest1 = new Grafo<>(nets[0]);
+                pTest1 = new Percolacion<>(gTest1);
+                pTest1.evaluacionPercolacion('R');
+                lineas = Files.readAllLines(Paths.get("out.csv"));
+                it = lineas.iterator();
+                it.next();
+                j = 0;
+                while (it.hasNext()){
+                    String s = it.next();
+                    String[] str = s.split(",");
+                    matrix[j][0] += Double.parseDouble(str[0]);
+                    matrix[j][1] += Double.parseDouble(str[1]);
+                    matrix[j][2] += Double.parseDouble(str[2]);
+                    matrix[j][3] += Double.parseDouble(str[3]);
+                    j++;
+                }
+            }
+            FileWriter f = new FileWriter("out.csv");
+            for (int i = 0; i < lineas.size()-1 ; i++) {
+                f.write((matrix[i][0]/100) + ","
+                        +(matrix[i][1]/100) +","
+                        +(matrix[i][2]/100) +","
+                        +(matrix[i][3]/100) +"\n");
+            }
+            f.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
