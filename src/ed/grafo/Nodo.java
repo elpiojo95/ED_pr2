@@ -32,16 +32,39 @@ public class Nodo<T1> {
     }
 
     /**
-     * Metodo toSting
-     * @return String
+     * metodo que retorna el grado del nodo
+     * @return grado del nodo
      */
-    @Override
-    public String toString() {
-        return "\nNodo{" +
-                "id=" + id +
-                ", info=" + info +
-                ", listaDeEnlaces=" + listaDeEnlaces +
-                '}';
+    public int gradoNodo(){
+        return this.listaDeEnlaces.size();
+    }
+
+    /**
+     * metodo que me retorna el peso total de todos los enlaces del nodo
+     * @return pesoTot
+     */
+    public double pesoTotalEnlacesNodo(){
+        double pesoTot = 0;
+        for (Enlace listaDeEnlace : this.listaDeEnlaces) {
+            pesoTot = pesoTot + listaDeEnlace.getPeso();
+        }
+        return pesoTot;
+    }
+
+    public void eliminarEnlaces(){
+        this.listaDeEnlaces.clear();
+    }
+
+    public void anadirEnlace(Enlace enlace){
+        this.listaDeEnlaces.add(enlace);
+    }
+
+    public boolean existeEnlace(int idNodoB){
+        if (this.listaDeEnlaces.size() == 0) return false;
+        for (Enlace listaDeEnlace : this.listaDeEnlaces) {
+            if (listaDeEnlace.getNodoB() == idNodoB) return true;
+        }
+        return false;
     }
 
     /**
@@ -65,41 +88,15 @@ public class Nodo<T1> {
     }
 
     /**
-     * metodo que retorna el grado del nodo
-     * @return grado del nodo
+     * Metodo toSting
+     * @return String
      */
-    public int gradoNodo(){
-        return this.listaDeEnlaces.size();
-    }
-
-    /**
-     * metodo que me retorna el peso total de todos los enlaces del nodo
-     * @return pesoTot
-     */
-    public double pesoTotalEnlacesNodo(){
-        double pesoTot = 0;
-        for (Enlace listaDeEnlace : this.listaDeEnlaces) {
-            pesoTot = pesoTot + listaDeEnlace.getPeso();
-        }
-        return pesoTot;
-    }
-
-    /**
-     * metodo para eliminar los enlaces de un nodo
-     */
-    public void eliminarEnlaces(){
-        this.listaDeEnlaces.clear();
-    }
-
-    public void anadirEnlace(Enlace enlace){
-        this.listaDeEnlaces.add(enlace);
-    }
-
-    public boolean existeEnlace(int idNodoB){
-        if (this.listaDeEnlaces.size() == 0) return false;
-        for (Enlace listaDeEnlace : this.listaDeEnlaces) {
-            if (listaDeEnlace.getNodoB() == idNodoB) return true;
-        }
-        return false;
+    @Override
+    public String toString() {
+        return "\nNodo{" +
+                "id=" + id +
+                ", info=" + info +
+                ", listaDeEnlaces=" + listaDeEnlaces +
+                '}';
     }
 }
