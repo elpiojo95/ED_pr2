@@ -62,16 +62,18 @@ public class mainCLI {
             long startTime = System.nanoTime();
             perc.evaluacionPercolacion(Integer.parseInt(opt)-1);
             long stopTime = System.nanoTime();
-            System.out.println((double)(stopTime - startTime)/1000000000);
+            System.out.print("Tiempo de ejecuion: " + (double)(stopTime - startTime)/1000000000);
         }
         else {
             long startTime = System.nanoTime();
             evaluacionMediaAleatoria(grafo, perc);
             long stopTime = System.nanoTime();
-            System.out.println((double)(stopTime - startTime)/1000000000);
+            System.out.print("Tiempo de ejecuion: " + ((double)(stopTime - startTime)/1000000000)/100);
         }
+        System.out.println(" segundos");
 
         //llamar al script de python
+        Runtime.getRuntime().exec("python plot.py");
     }
 
     private static void evaluacionMediaAleatoria(Grafo<NullType> grafo, Percolacion<NullType> perc) throws IOException {
@@ -98,7 +100,7 @@ public class mainCLI {
             j++;
         }
         for (int i = 1; i < 100; i++) {
-            System.out.println("iter:" + i);
+            System.out.println(i + "%");
             perc = new Percolacion<>(grafo);
             perc.evaluacionPercolacion(0);
             lineas = Files.readAllLines(Paths.get("out.csv"));
