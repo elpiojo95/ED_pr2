@@ -1,8 +1,8 @@
 package ed.grafo;
 
 public class Enlace {
-    private int nodoB;
-    private Double peso;
+    private final int nodoB;
+    private final Double peso;
 
     /**
      * Constructor de Enlace
@@ -38,5 +38,4 @@ public class Enlace {
         return "[" + nodoB +","
                 +peso +"]";
     }
-
 }
