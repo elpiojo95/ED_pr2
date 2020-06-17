@@ -10,8 +10,9 @@ import java.util.Stack;
 
 public class Percolacion<T> {
     private Grafo<T> g;
-    private ArrayList<Boolean> listaNodosActivos;
+    private ArrayList<Integer> listaNodosActivos;
     private int nNodosActivos;
+    private int nodosEliminar;
     private double op;
     private double ncc;
     private double gcc;
@@ -21,15 +22,15 @@ public class Percolacion<T> {
     public Percolacion(Grafo<T> g) {
         this.g = new Grafo<>(g);
         this.listaNodosActivos = new ArrayList<>();
-        this.listaNodosActivos.add(false);
         for (int i = 1; i <= g.getnNodos() ; i++) {
-            this.listaNodosActivos.add(true);
+            this.listaNodosActivos.add(i);
         }
         this.nNodosActivos = g.getnNodos();
         this.op = 0;
         this.ncc = 0;
         this.gcc = 0;
         this.slcc = 0;
+        this.nodosEliminar = (int) Math.ceil((double)g.getnNodos()/1000);
         this.evaluar();
     }
 
@@ -42,7 +43,7 @@ public class Percolacion<T> {
         for (int i = 1; i < listaNodosActivos.size(); i++) {
             Stack<Nodo<T>> s = new Stack<>();
             int cc = 0;
-            if (listaNodosActivos.get(i) && !explorados.contains(i)) {
+            if (!explorados.contains(listaNodosActivos.get(i))) {
                 Nodo<T> n = g.getListaNodos().get(i);
                 s.push(n);
                 while (!s.empty()) {
@@ -61,6 +62,7 @@ public class Percolacion<T> {
         }
         this.ncc = (this.ncc+g.getnNodos()-nNodosActivos)/g.getnNodos();
     }
+
     public void evaluacionPercolacion(int opt) {
         try {
             FileWriter outputfile = new FileWriter("out.csv");
@@ -69,37 +71,42 @@ public class Percolacion<T> {
                     this.ncc + "," +
                     this.gcc + "," +
                     this.slcc +"\n");
-            while (this.listaNodosActivos.contains(true)) {
+
+            while (!this.listaNodosActivos.isEmpty()) {
                 int nodoEliminado;
-                switch (opt) {
-                    case 1: // metodo grado
-                        nodoEliminado = this.eliminarNodoStr();
-                        break;
-                    case 2: // metodo strength
-                        nodoEliminado = this.eliminarNodoGrado();
-                        break;
-                    case 3: // metodo grado con heap //TODO
-                        nodoEliminado = this.eliminarNodoAleatorio();
-                        break;
-                    case 4: // metodo strength con heap //TODO
-                        nodoEliminado = this.eliminarNodoAleatorio();
-                        break;
-                    default:
-                        nodoEliminado = this.eliminarNodoAleatorio();
-                }
-                if (nodoEliminado != 0){
-                    Nodo<T> n = this.g.getListaNodos().get(nodoEliminado);
-                    for (int i = 0; i < n.getListaDeEnlaces().size() ; i++) {
-                        int id = n.getListaDeEnlaces().get(i).getNodoB();
-                        Nodo<T> dest = g.getListaNodos().get(id);
-                        int k = 0;
-                        while (dest.getListaDeEnlaces().get(k).getNodoB() != n.getId())
-                        {
-                            k++;
-                        }
-                        dest.getListaDeEnlaces().remove(k);
+                for (int i = 0; i < this.nodosEliminar; i++) {
+                    if (this.listaNodosActivos.isEmpty()) break;
+
+                    switch (opt) {
+                        case 1: // metodo grado
+                            nodoEliminado = this.eliminarNodoStr();
+                            break;
+                        case 2: // metodo strength
+                            nodoEliminado = this.eliminarNodoGrado();
+                            break;
+                        case 3: // metodo grado con heap //TODO
+                            nodoEliminado = this.eliminarNodoAleatorio();
+                            break;
+                        case 4: // metodo strength con heap //TODO
+                            nodoEliminado = this.eliminarNodoAleatorio();
+                            break;
+                        default:
+                            nodoEliminado = this.eliminarNodoAleatorio();
                     }
-                    n.eliminarEnlaces();
+                    if (nodoEliminado != 0){
+                        Nodo<T> n = this.g.getListaNodos().get(nodoEliminado);
+                        for (int j = 0; j < n.getListaDeEnlaces().size() ; j++) {
+                            int id = n.getListaDeEnlaces().get(j).getNodoB();
+                            Nodo<T> dest = g.getListaNodos().get(id);
+                            int k = 0;
+                            while (dest.getListaDeEnlaces().get(k).getNodoB() != n.getId())
+                            {
+                                k++;
+                            }
+                            dest.getListaDeEnlaces().remove(k);
+                        }
+                        n.eliminarEnlaces();
+                    }
                 }
                 this.evaluar();
                 outputfile.write(this.op + "," +
@@ -108,24 +115,16 @@ public class Percolacion<T> {
                         this.slcc + "\n");
             }
             outputfile.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private int eliminarNodoAleatorio() {
-        int idNodoEliminado = 0;
         //generar el nodo aleatorio i actualizar la lista de nodos activos
-        int idRand = (int) (Math.random() * this.nNodosActivos + 1);
-        for (int i = 0; i < idRand ; i++) {
-            if (this.listaNodosActivos.get(idNodoEliminado)){
-                idNodoEliminado++;
-            }
-            while (!this.listaNodosActivos.get(idNodoEliminado)) {
-                idNodoEliminado++;
-            }
-        }
-        this.listaNodosActivos.set(idNodoEliminado, false);
+        int idRand = (int) (Math.random() * this.nNodosActivos);
+        int idNodoEliminado = this.listaNodosActivos.get(idRand);
+        this.listaNodosActivos.remove(idRand);
         this.nNodosActivos--;
         return idNodoEliminado;
     }
@@ -134,17 +133,14 @@ public class Percolacion<T> {
         int idNodoEliminado = 0, maxGrado = 0, j = 0;
         //encontrar id nodo con mas grado y actualizar la listaNodosActivos
         for (int i = 0; i < this.nNodosActivos ; i++) {
-            while (!this.listaNodosActivos.get(j)){
-                j++;
+            int idnodo = this.listaNodosActivos.get(i);
+            if (this.g.getListaNodos().get(idnodo).gradoNodo() >= maxGrado) {
+                maxGrado = this.g.getListaNodos().get(idnodo).gradoNodo();
+                idNodoEliminado = idnodo;
             }
-            if (this.g.getListaNodos().get(j).gradoNodo() >= maxGrado){
-                maxGrado = this.g.getListaNodos().get(j).gradoNodo();
-                idNodoEliminado = j;
-            }
-            j++;
         }
         this.nNodosActivos--;
-        this.listaNodosActivos.set(idNodoEliminado, false);
+        this.listaNodosActivos.remove((Integer) idNodoEliminado);
         return idNodoEliminado;
     }
 
@@ -153,17 +149,14 @@ public class Percolacion<T> {
         int idNodoEliminado = 0, j = 0;
         double maxStr = 0;
         for (int i = 0; i < this.nNodosActivos; i++) {
-            while (!this.listaNodosActivos.get(j)){
-                j++;
+            int idnodo = this.listaNodosActivos.get(i);
+            if (this.g.getListaNodos().get(idnodo).pesoTotalEnlacesNodo() >= maxStr) {
+                maxStr = this.g.getListaNodos().get(idnodo).pesoTotalEnlacesNodo();
+                idNodoEliminado = idnodo;
             }
-            if (this.g.getListaNodos().get(j).pesoTotalEnlacesNodo() >= maxStr){
-                maxStr = this.g.getListaNodos().get(j).pesoTotalEnlacesNodo();
-                idNodoEliminado = j;
-            }
-            j++;
         }
         this.nNodosActivos--;
-        this.listaNodosActivos.set(idNodoEliminado, false);
+        this.listaNodosActivos.remove((Integer) idNodoEliminado);
         return idNodoEliminado;
     }
 
