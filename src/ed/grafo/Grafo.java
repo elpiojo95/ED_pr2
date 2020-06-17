@@ -1,6 +1,7 @@
 package ed.grafo;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -41,6 +42,10 @@ public class Grafo<T1> {
         }
     }
 
+    /**
+     * Copy constructor
+     * @param other Grafo a copiar
+     */
     public Grafo(Grafo<T1> other) {
         this.nNodos = other.nNodos;
         this.listaNodos = new ArrayList<>();
@@ -53,19 +58,27 @@ public class Grafo<T1> {
     }
 
     /**
-     * getter de nNodos
-     * @return nNodos
+     * Metodo que lee un fichero .net dado un Scanner
+     * @param sc scanner
      */
-    public int getnNodos() {
-        return nNodos;
-    }
-
-    /**
-     * getter listaNodos
-     * @return listaNodos
-     */
-    public ArrayList<Nodo<T1>> getListaNodos() {
-        return listaNodos;
+    private void cargarNetwork(Scanner sc) {
+        Pattern p = Pattern.compile("^[\\s]*([\\d]*)[\\s]*([^\\r\\n]*)?");
+        Matcher m;
+        for (int i = 0; i < this.nNodos; i++) {
+            m = p.matcher(sc.nextLine());
+            if (m.matches()) this.addNodo(Integer.parseInt(m.group(1)));
+        }
+        sc.nextLine();
+        p = Pattern.compile("^[\\s]*([\\d]*)[\\s]*([\\d]*)[\\s]*([\\d]*.[\\d]*)");
+        while (sc.hasNextLine()) {
+            m = p.matcher(sc.nextLine());
+            if (m.matches()) {
+                this.addEnlace(Integer.parseInt(m.group(1)),
+                        Integer.parseInt(m.group(2)),
+                        Double.parseDouble(m.group(3)));
+            }
+        }
+        sc.close();
     }
 
     /**
@@ -116,27 +129,28 @@ public class Grafo<T1> {
     }
 
     /**
-     * Metodo que lee un fichero .net dado un Scanner
-     * @param sc scanner
+     * Metodo para comprovar si este enlace existe
+     * @param idNodoA origen
+     * @param idNodoB destino
      */
-    private void cargarNetwork(Scanner sc) {
-        Pattern p = Pattern.compile("^[\\s]*([\\d]*)[\\s]*([^\\r\\n]*)?");
-        Matcher m;
-        for (int i = 0; i < this.nNodos; i++) {
-            m = p.matcher(sc.nextLine());
-            if (m.matches()) this.addNodo(Integer.parseInt(m.group(1)));
-        }
-        sc.nextLine();
-        p = Pattern.compile("^[\\s]*([\\d]*)[\\s]*([\\d]*)[\\s]*([\\d]*.[\\d]*)");
-        while (sc.hasNextLine()) {
-            m = p.matcher(sc.nextLine());
-            if (m.matches()) {
-                this.addEnlace(Integer.parseInt(m.group(1)),
-                        Integer.parseInt(m.group(2)),
-                        Double.parseDouble(m.group(3)));
-            }
-        }
-        sc.close();
+    public Boolean enlaceExiste(int idNodoA, int idNodoB){
+        return this.listaNodos.get(idNodoA).existeEnlace(idNodoB);
+    }
+
+    /**
+     * getter de nNodos
+     * @return nNodos
+     */
+    public int getnNodos() {
+        return nNodos;
+    }
+
+    /**
+     * getter listaNodos
+     * @return listaNodos
+     */
+    public ArrayList<Nodo<T1>> getListaNodos() {
+        return listaNodos;
     }
 
     /**
@@ -150,14 +164,4 @@ public class Grafo<T1> {
                 "\nlistaNodos=" + listaNodos +
                 '}';
     }
-
-    /**
-     * Metodo para comprovar si este enlace existe
-     * @param idNodoA origen
-     * @param idNodoB destino
-     */
-    public Boolean enlaceExiste(int idNodoA, int idNodoB){
-        return this.listaNodos.get(idNodoA).existeEnlace(idNodoB);
-    }
-
 }
