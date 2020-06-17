@@ -99,7 +99,6 @@ public class Grafo<T1> {
      * @param peso peso
      */
     public void addEnlace(int nodoA, int nodoB, Double peso) {
-        int size;
         Enlace temp = new Enlace(nodoB, peso);
         Enlace tempInverso = new Enlace(nodoA, peso);
         if (this.nNodos < nodoA){
