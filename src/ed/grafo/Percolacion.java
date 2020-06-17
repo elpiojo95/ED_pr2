@@ -1,10 +1,6 @@
 package ed.grafo;
 
-import com.sun.source.tree.WhileLoopTree;
-
-import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -18,7 +14,10 @@ public class Percolacion<T> {
     private double gcc;
     private double slcc;
 
-
+    /**
+     * Contructor de percolacion
+     * @param g Grafo a analizar
+     */
     public Percolacion(Grafo<T> g) {
         this.g = new Grafo<>(g);
         this.listaNodosActivos = new ArrayList<>();
@@ -34,7 +33,10 @@ public class Percolacion<T> {
         this.evaluar();
     }
 
-    public void evaluar() {
+    /**
+     * Metodo que calcula todos los valores de la percolacion
+     */
+    private void evaluar() {
         this.op = 0; this.ncc = 0; this.gcc = 0; this.slcc = 0;
         // Calcular op
         this.op = (double) nNodosActivos/g.getnNodos();
@@ -63,6 +65,14 @@ public class Percolacion<T> {
         this.ncc = (this.ncc+g.getnNodos()-nNodosActivos)/g.getnNodos();
     }
 
+    /**
+     * Metodo que crea un fichero out.csv con todas las evalucaciones hasta deestruir el grafo
+     * @param opt 0 Aleatorio
+     *            1 Grado
+     *            2 Strength
+     *            3 Heap grado
+     *            4 Heap strength
+     */
     public void evaluacionPercolacion(int opt) {
         try {
             FileWriter outputfile = new FileWriter("out.csv");
@@ -120,6 +130,10 @@ public class Percolacion<T> {
         }
     }
 
+    /**
+     * Metodo que elimina un nodo aleatorio
+     * @return id del nodo eliminado
+     */
     private int eliminarNodoAleatorio() {
         //generar el nodo aleatorio i actualizar la lista de nodos activos
         int idRand = (int) (Math.random() * this.nNodosActivos);
@@ -129,6 +143,10 @@ public class Percolacion<T> {
         return idNodoEliminado;
     }
 
+    /**
+     * Metodo que busca el nodo de mayor grado y lo elimina
+     * @return id del nodo eliminado
+     */
     private int eliminarNodoGrado() {
         int idNodoEliminado = 0, maxGrado = 0, j = 0;
         //encontrar id nodo con mas grado y actualizar la listaNodosActivos
@@ -144,6 +162,10 @@ public class Percolacion<T> {
         return idNodoEliminado;
     }
 
+    /**
+     * Metodo que busca el nodo de mayor strength y lo elimina
+     * @return id del nodo eliminado
+     */
     private int eliminarNodoStr() {
         //encontrar idNodo con mas strength y actualizar listaNodosActivos
         int idNodoEliminado = 0, j = 0;
@@ -160,6 +182,10 @@ public class Percolacion<T> {
         return idNodoEliminado;
     }
 
+    /**
+     * Metodo auxiliar de evaluar que actualiza gcc y slcc
+     * @param i numero de nodos del grafo conexo
+     */
     private void actualizarGccSlcc(int i) {
         double d = (double) i / g.getnNodos();
         if (d > this.gcc) {
@@ -169,21 +195,5 @@ public class Percolacion<T> {
         else if (d > this.slcc) {
             this.slcc = d;
         }
-    }
-
-    public double getOp() {
-        return op;
-    }
-
-    public double getNcc() {
-        return ncc;
-    }
-
-    public double getGcc() {
-        return gcc;
-    }
-
-    public double getSlcc() {
-        return slcc;
     }
 }
