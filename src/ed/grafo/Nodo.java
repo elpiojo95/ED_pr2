@@ -1,6 +1,5 @@
 package ed.grafo;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Nodo<T1> {
@@ -79,7 +78,6 @@ public class Nodo<T1> {
      */
     public double pesoTotalEnlacesNodo(){
         double pesoTot = 0;
-        int tam = this.listaDeEnlaces.size();
         for (Enlace listaDeEnlace : this.listaDeEnlaces) {
             pesoTot = pesoTot + listaDeEnlace.getPeso();
         }
