@@ -59,9 +59,9 @@ public class Percolacion<T> {
                 this.actualizarGccSlcc(cc);
             }
         }
-        this.ncc = this.ncc/g.getnNodos();
+        this.ncc = (this.ncc+g.getnNodos()-nNodosActivos)/g.getnNodos();
     }
-    public void evaluacionPercolacion(char c) {
+    public void evaluacionPercolacion(int opt) {
         try {
             FileWriter outputfile = new FileWriter("out.csv");
             outputfile.write("op,ncc,gcc,slcc\n");
@@ -71,15 +71,18 @@ public class Percolacion<T> {
                     this.slcc +"\n");
             while (this.listaNodosActivos.contains(true)) {
                 int nodoEliminado;
-                switch (c) {
-                    case 'R':
-                        nodoEliminado = this.eliminarNodoAleatorio();
-                        break;
-                    case 'S':
+                switch (opt) {
+                    case 1: // metodo grado
                         nodoEliminado = this.eliminarNodoStr();
                         break;
-                    case 'D':
+                    case 2: // metodo strength
                         nodoEliminado = this.eliminarNodoGrado();
+                        break;
+                    case 3: // metodo grado con heap //TODO
+                        nodoEliminado = this.eliminarNodoAleatorio();
+                        break;
+                    case 4: // metodo strength con heap //TODO
+                        nodoEliminado = this.eliminarNodoAleatorio();
                         break;
                     default:
                         nodoEliminado = this.eliminarNodoAleatorio();
