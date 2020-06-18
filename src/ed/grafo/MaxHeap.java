@@ -22,8 +22,8 @@ public class MaxHeap<T> {
         this.heap.add(null);
     }
 
-    private boolean tienePadre(int idx) {
-        return idx > 1;
+    private int padre(int idx) {
+        return idx / 2;
     }
 
     private int izqHijo(int idx) {
@@ -32,6 +32,10 @@ public class MaxHeap<T> {
 
     private int dchHijo(int idx) {
         return idx * 2 + 1;
+    }
+
+    private boolean tienePadre(int idx) {
+        return idx > 1;
     }
 
     private boolean tieneIzqHijo(int idx) {
@@ -43,11 +47,17 @@ public class MaxHeap<T> {
     }
 
     private void ascender() {
-
+        int idx = this.heap.size()-1;
+        while (tienePadre(idx) && heap.get(padre(idx)).compareTo(heap.get(idx), tipo) < 0)
+        {
+            Collections.swap(this.heap, idx, padre(idx));
+            idx = padre(idx);
+        }
     }
 
     private void descender() {
     }
+
     public void add(Nodo<T> n) {
         this.heap.add(n);
         this.ascender();
@@ -58,7 +68,6 @@ public class MaxHeap<T> {
         this.heap.remove(heap.size()-1);
         this.descender();
     }
-
 
     public Nodo<T> ver() {
         return heap.get(1);
