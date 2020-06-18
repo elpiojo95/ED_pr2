@@ -48,7 +48,7 @@ public class MaxHeap<T> {
 
     private void ascender() {
         int idx = this.heap.size()-1;
-        while (tienePadre(idx) && heap.get(padre(idx)).compareTo(heap.get(idx), tipo) < 0)
+        while (tienePadre(idx) && this.heap.get(padre(idx)).compareTo(this.heap.get(idx), tipo) < 0)
         {
             Collections.swap(this.heap, idx, padre(idx));
             idx = padre(idx);
@@ -56,6 +56,20 @@ public class MaxHeap<T> {
     }
 
     private void descender() {
+        int idx = 1;
+        while (this.tieneIzqHijo(idx)){
+            int grande = this.izqHijo(idx);
+            if (tieneDchHijo(idx) && this.heap.get(izqHijo(idx)).compareTo(this.heap.get(dchHijo(idx)), tipo) < 0)
+            {
+                grande = this.dchHijo(idx);
+            }
+            if (this.heap.get(idx).compareTo(this.heap.get(grande), tipo) < 0)
+            {
+                Collections.swap(this.heap, idx, grande);
+            }
+            else break;
+            idx = grande;
+        }
     }
 
     public void add(Nodo<T> n) {
