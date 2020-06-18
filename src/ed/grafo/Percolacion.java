@@ -7,6 +7,7 @@ import java.util.Stack;
 public class Percolacion<T> {
     private Grafo<T> g;
     private ArrayList<Integer> listaNodosActivos;
+    private MaxHeap<T> heap = null;
     private int nNodosActivos;
     private int nodosEliminar;
     private double op;
@@ -85,6 +86,22 @@ public class Percolacion<T> {
         return idNodoEliminado;
     }
 
+    private int eliminarNodoHeapGrado() {
+        if (heap == null) {
+            this.heap = new MaxHeap<>(false);
+            for (int i = 1; i <= g.getnNodos() ; i++) {
+                this.heap.add(g.getListaNodos().get(i));
+            }
+        }
+        int idNodoEliminado = 0;
+        this.nNodosActivos--;
+        if (!heap.isVacio()) {
+            idNodoEliminado = heap.verYeliminar().getId();
+        }
+        this.listaNodosActivos.remove((Integer) idNodoEliminado);
+        return idNodoEliminado;
+    }
+
     /**
      * Metodo auxiliar de evaluar que actualiza gcc y slcc
      * @param i numero de nodos del grafo conexo
@@ -156,13 +173,13 @@ public class Percolacion<T> {
 
                     switch (opt) {
                         case 1: // metodo grado
-                            nodoEliminado = this.eliminarNodoStr();
-                            break;
-                        case 2: // metodo strength
                             nodoEliminado = this.eliminarNodoGrado();
                             break;
+                        case 2: // metodo strength
+                            nodoEliminado = this.eliminarNodoStr();
+                            break;
                         case 3: // metodo grado con heap //TODO
-                            nodoEliminado = this.eliminarNodoAleatorio();
+                            nodoEliminado = this.eliminarNodoHeapGrado();
                             break;
                         case 4: // metodo strength con heap //TODO
                             nodoEliminado = this.eliminarNodoAleatorio();
