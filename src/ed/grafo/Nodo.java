@@ -127,7 +127,6 @@ public class Nodo<T1> {
         return listaDeEnlaces;
     }
 
-    @Override
     public int compareTo(Nodo<T1> o, boolean str) {
         if (str) {
             return Double.compare(this.getStrength(), o.strength);
