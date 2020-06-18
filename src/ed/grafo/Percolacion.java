@@ -98,6 +98,7 @@ public class Percolacion<T> {
         if (!heap.isVacio()) {
             idNodoEliminado = heap.verYeliminar().getId();
         }
+        System.out.println(g.getListaNodos().get(idNodoEliminado).getGrado());
         this.listaNodosActivos.remove((Integer) idNodoEliminado);
         return idNodoEliminado;
     }
@@ -193,6 +194,9 @@ public class Percolacion<T> {
                             int id = n.idNodoDestino(j);
                             Nodo<T> dest = g.getListaNodos().get(id);
                             dest.eliminarEnlace(n.getId());
+                            if (this.heap != null) {
+                                this.heap.descender(dest);
+                            }
                         }
                         n.eliminarEnlaces();
                     }
