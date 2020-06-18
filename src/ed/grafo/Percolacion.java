@@ -172,7 +172,7 @@ public class Percolacion<T> {
                     }
                     if (nodoEliminado != 0){
                         Nodo<T> n = this.g.getListaNodos().get(nodoEliminado);
-                        for (int j = 0; j < n.tamanoLista() ; j++) {
+                        for (int j = 0; j < n.gradoNodo() ; j++) {
                             int id = n.idNodoDestino(j);
                             Nodo<T> dest = g.getListaNodos().get(id);
                             dest.eliminarEnlace(n.getId());
