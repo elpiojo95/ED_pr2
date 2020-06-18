@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class mainCLI {
+    static int NPRUEBAS = 100;
     public static void main(String[] args) throws IOException {
         //Inicializaciones
         //Ficheros
@@ -68,7 +69,7 @@ public class mainCLI {
             long startTime = System.nanoTime();
             evaluacionMediaAleatoria(grafo, perc);
             long stopTime = System.nanoTime();
-            System.out.print("Tiempo de ejecuion: " + ((double)(stopTime - startTime)/1000000000)/100);
+            System.out.print("Tiempo de ejecuion: " + ((double)(stopTime - startTime)/1000000000)/NPRUEBAS);
         }
         System.out.println(" segundos");
 
@@ -99,8 +100,8 @@ public class mainCLI {
             matrix[j][3] = Double.parseDouble(str[3]);
             j++;
         }
-        for (int i = 1; i < 100; i++) {
-            System.out.println(i + "%");
+        for (int i = 1; i < NPRUEBAS; i++) {
+            System.out.println((i*100/NPRUEBAS) + "%");
             perc = new Percolacion<>(grafo);
             perc.evaluacionPercolacion(0);
             lineas = Files.readAllLines(Paths.get("out.csv"));
@@ -117,6 +118,7 @@ public class mainCLI {
                 j++;
             }
         }
+        System.out.println(100 + "%");
         for (int i = 0; i < lineas.size()-1 ; i++) {
             f.write((matrix[i][0]/100) + ","
                     +(matrix[i][1]/100) +","
