@@ -34,103 +34,6 @@ public class Percolacion<T> {
     }
 
     /**
-     * Metodo que calcula todos los valores de la percolacion
-     */
-    private void evaluar() {
-        this.op = 0; this.ncc = 0; this.gcc = 0; this.slcc = 0;
-        // Calcular op
-        this.op = (double) nNodosActivos/g.getnNodos();
-        //DFS
-        ArrayList<Integer> explorados = new ArrayList<>();
-        for (int i = 1; i < listaNodosActivos.size(); i++) {
-            Stack<Nodo<T>> s = new Stack<>();
-            int cc = 0;
-            if (!explorados.contains(listaNodosActivos.get(i))) {
-                Nodo<T> n = g.getListaNodos().get(i);
-                s.push(n);
-                while (!s.empty()) {
-                    n = s.pop();
-                    if (!explorados.contains(n.getId())) {
-                        explorados.add(n.getId());
-                        cc++;
-                        for (Enlace enclace : n.getListaDeEnlaces()) {
-                            s.push(g.getListaNodos().get(enclace.getNodoB()));
-                        }
-                    }
-                }
-                this.ncc++;
-                this.actualizarGccSlcc(cc);
-            }
-        }
-        this.ncc = (this.ncc+g.getnNodos()-nNodosActivos)/g.getnNodos();
-    }
-
-    /**
-     * Metodo que crea un fichero out.csv con todas las evalucaciones hasta deestruir el grafo
-     * @param opt 0 Aleatorio
-     *            1 Grado
-     *            2 Strength
-     *            3 Heap grado
-     *            4 Heap strength
-     */
-    public void evaluacionPercolacion(int opt) {
-        try {
-            FileWriter outputfile = new FileWriter("out.csv");
-            outputfile.write("op,ncc,gcc,slcc\n");
-            outputfile.write(this.op + "," +
-                    this.ncc + "," +
-                    this.gcc + "," +
-                    this.slcc +"\n");
-
-            while (!this.listaNodosActivos.isEmpty()) {
-                int nodoEliminado;
-                for (int i = 0; i < this.nodosEliminar; i++) {
-                    if (this.listaNodosActivos.isEmpty()) break;
-
-                    switch (opt) {
-                        case 1: // metodo grado
-                            nodoEliminado = this.eliminarNodoStr();
-                            break;
-                        case 2: // metodo strength
-                            nodoEliminado = this.eliminarNodoGrado();
-                            break;
-                        case 3: // metodo grado con heap //TODO
-                            nodoEliminado = this.eliminarNodoAleatorio();
-                            break;
-                        case 4: // metodo strength con heap //TODO
-                            nodoEliminado = this.eliminarNodoAleatorio();
-                            break;
-                        default:
-                            nodoEliminado = this.eliminarNodoAleatorio();
-                    }
-                    if (nodoEliminado != 0){
-                        Nodo<T> n = this.g.getListaNodos().get(nodoEliminado);
-                        for (int j = 0; j < n.getListaDeEnlaces().size() ; j++) {
-                            int id = n.getListaDeEnlaces().get(j).getNodoB();
-                            Nodo<T> dest = g.getListaNodos().get(id);
-                            int k = 0;
-                            while (dest.getListaDeEnlaces().get(k).getNodoB() != n.getId())
-                            {
-                                k++;
-                            }
-                            dest.getListaDeEnlaces().remove(k);
-                        }
-                        n.eliminarEnlaces();
-                    }
-                }
-                this.evaluar();
-                outputfile.write(this.op + "," +
-                        this.ncc + "," +
-                        this.gcc + "," +
-                        this.slcc + "\n");
-            }
-            outputfile.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Metodo que elimina un nodo aleatorio
      * @return id del nodo eliminado
      */
@@ -194,6 +97,103 @@ public class Percolacion<T> {
         }
         else if (d > this.slcc) {
             this.slcc = d;
+        }
+    }
+
+    /**
+     * Metodo que calcula todos los valores de la percolacion
+     */
+    private void evaluar() {
+        this.op = 0; this.ncc = 0; this.gcc = 0; this.slcc = 0;
+        // Calcular op
+        this.op = (double) nNodosActivos/g.getnNodos();
+        //DFS
+        ArrayList<Integer> explorados = new ArrayList<>();
+        for (int i = 1; i < listaNodosActivos.size(); i++) {
+            Stack<Nodo<T>> s = new Stack<>();
+            int cc = 0;
+            if (!explorados.contains(listaNodosActivos.get(i))) {
+                Nodo<T> n = g.getListaNodos().get(i);
+                s.push(n);
+                while (!s.empty()) {
+                    n = s.pop();
+                    if (!explorados.contains(n.getId())) {
+                        explorados.add(n.getId());
+                        cc++;
+                        for (Enlace enclace : n.getListaDeEnlaces()) {
+                            s.push(g.getListaNodos().get(enclace.getNodoB()));
+                        }
+                    }
+                }
+                this.ncc++;
+                this.actualizarGccSlcc(cc);
+            }
+        }
+        this.ncc = (this.ncc+g.getnNodos()-nNodosActivos)/g.getnNodos();
+    }
+
+    /**
+     * Metodo que crea un fichero out.csv con todas las evalucaciones hasta deestruir el grafo
+     * @param opt 0 Aleatorio
+     *<br>1 Grado
+     *<br>2 Strength
+     *<br>3 Heap grado
+     *<br>4 Heap strength
+     */
+    public void evaluacionPercolacion(int opt) {
+        try {
+            FileWriter outputfile = new FileWriter("out.csv");
+            outputfile.write("op,ncc,gcc,slcc\n");
+            outputfile.write(this.op + "," +
+                    this.ncc + "," +
+                    this.gcc + "," +
+                    this.slcc +"\n");
+
+            while (!this.listaNodosActivos.isEmpty()) {
+                int nodoEliminado;
+                for (int i = 0; i < this.nodosEliminar; i++) {
+                    if (this.listaNodosActivos.isEmpty()) break;
+
+                    switch (opt) {
+                        case 1: // metodo grado
+                            nodoEliminado = this.eliminarNodoStr();
+                            break;
+                        case 2: // metodo strength
+                            nodoEliminado = this.eliminarNodoGrado();
+                            break;
+                        case 3: // metodo grado con heap //TODO
+                            nodoEliminado = this.eliminarNodoAleatorio();
+                            break;
+                        case 4: // metodo strength con heap //TODO
+                            nodoEliminado = this.eliminarNodoAleatorio();
+                            break;
+                        default:
+                            nodoEliminado = this.eliminarNodoAleatorio();
+                    }
+                    if (nodoEliminado != 0){
+                        Nodo<T> n = this.g.getListaNodos().get(nodoEliminado);
+                        for (int j = 0; j < n.getListaDeEnlaces().size() ; j++) {
+                            int id = n.getListaDeEnlaces().get(j).getNodoB();
+                            Nodo<T> dest = g.getListaNodos().get(id);
+                            int k = 0;
+                            while (dest.getListaDeEnlaces().get(k).getNodoB() != n.getId())
+                            {
+                                k++;
+                            }
+                            dest.getListaDeEnlaces().remove(k);
+                        }
+                        n.eliminarEnlaces();
+                    }
+                }
+                this.evaluar();
+                outputfile.write(this.op + "," +
+                        this.ncc + "," +
+                        this.gcc + "," +
+                        this.slcc + "\n");
+            }
+            outputfile.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
