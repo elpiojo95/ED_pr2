@@ -84,12 +84,13 @@ public class MaxHeap<T> {
     }
 
     public Nodo<T> ver() {
+        if (this.isVacio()) return null;
         return heap.get(1);
     }
 
     public Nodo<T> verYeliminar() {
         Nodo<T> n = this.ver();
-        this.eliminar();
+        if (!this.isVacio()) this.eliminar();
         return n;
     }
 
