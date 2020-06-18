@@ -67,6 +67,22 @@ public class Nodo<T1> {
         return false;
     }
 
+    public int idNodoDestino(int idx){
+        return this.listaDeEnlaces.get(idx).getNodoB();
+    }
+
+    public void eliminarEnlace(int idNodo){
+        int i = 0;
+        while (this.idNodoDestino(i) != idNodo){
+            i++;
+        }
+        this.listaDeEnlaces.remove(i);
+    }
+
+    public int tamanoLista(){
+        return this.listaDeEnlaces.size();
+    }
+
     /**
      * getter Id del nodo
      * @return id
