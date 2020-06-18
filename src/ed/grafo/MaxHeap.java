@@ -5,18 +5,15 @@ import java.util.Collections;
 
 public class MaxHeap<T> {
     private ArrayList<Nodo<T>> heap;
-    private int length;
     private final boolean tipo;
 
     public MaxHeap() {
-        this.length = 0;
         this.tipo = false;
         this.heap = new ArrayList<>();
         this.heap.add(null);
     }
 
     public MaxHeap(boolean str) {
-        this.length = 0;
         this.tipo = str;
         this.heap = new ArrayList<>();
         this.heap.add(null);
@@ -72,6 +69,23 @@ public class MaxHeap<T> {
         }
     }
 
+    public void descender(Nodo<T> n) {
+        int idx = this.heap.indexOf(n);
+        while (this.tieneIzqHijo(idx)){
+            int grande = this.izqHijo(idx);
+            if (tieneDchHijo(idx) && this.heap.get(izqHijo(idx)).compareTo(this.heap.get(dchHijo(idx)), tipo) < 0)
+            {
+                grande = this.dchHijo(idx);
+            }
+            if (this.heap.get(idx).compareTo(this.heap.get(grande), tipo) < 0)
+            {
+                Collections.swap(this.heap, idx, grande);
+            }
+            else break;
+            idx = grande;
+        }
+    }
+
     public void add(Nodo<T> n) {
         this.heap.add(n);
         this.ascender();
@@ -98,4 +112,10 @@ public class MaxHeap<T> {
         return this.heap.size() == 1;
     }
 
+    @Override
+    public String toString() {
+        return "MaxHeap{" +
+                "heap=" + heap +
+                '}';
+    }
 }
