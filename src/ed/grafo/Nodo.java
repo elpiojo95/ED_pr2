@@ -7,6 +7,8 @@ public class Nodo<T1> {
     private int id;
     private T1 info;
     private LinkedList<Enlace> listaDeEnlaces;
+    private int grado;
+    private double strength;
 
     /**
      * Constructor Nodo
@@ -17,6 +19,8 @@ public class Nodo<T1> {
         this.id = id;
         this.info = info;
         this.listaDeEnlaces = new LinkedList<>();
+        this.grado = 0;
+        this.strength = 0;
     }
 
     /**
@@ -28,6 +32,8 @@ public class Nodo<T1> {
             this.id = n.id;
             this.info = n.info;
             this.listaDeEnlaces = new LinkedList<>(n.listaDeEnlaces);
+            this.grado = n.grado;
+            this.strength = n.strength;
         }
     }
 
@@ -45,17 +51,21 @@ public class Nodo<T1> {
      */
     public double pesoTotalEnlacesNodo(){
         double pesoTot = 0;
-        for (Enlace listaDeEnlace : this.listaDeEnlaces) {
-            pesoTot = pesoTot + listaDeEnlace.getPeso();
+        for (Enlace Enlace : this.listaDeEnlaces) {
+            pesoTot = pesoTot + Enlace.getPeso();
         }
         return pesoTot;
     }
 
     public void eliminarEnlaces(){
         this.listaDeEnlaces.clear();
+        this.grado = 0;
+        this.strength = 0;
     }
 
     public void anadirEnlace(Enlace enlace){
+        this.grado++;
+        this.strength += enlace.getPeso();
         this.listaDeEnlaces.add(enlace);
     }
 
@@ -76,11 +86,9 @@ public class Nodo<T1> {
         while (this.idNodoDestino(i) != idNodo){
             i++;
         }
+        this.grado--;
+        this.strength = this.pesoTotalEnlacesNodo();
         this.listaDeEnlaces.remove(i);
-    }
-
-    public int tamanoLista(){
-        return this.listaDeEnlaces.size();
     }
 
     /**
@@ -99,8 +107,34 @@ public class Nodo<T1> {
         return info;
     }
 
+    /**
+     * getter grado del nodo
+     * @return grado
+     */
+    public int getGrado() {
+        return grado;
+    }
+
+    /**
+     * getter del strength del nodo
+     * @return strength
+     */
+    public double getStrength() {
+        return strength;
+    }
+
     public LinkedList<Enlace> getListaDeEnlaces() {
         return listaDeEnlaces;
+    }
+
+    @Override
+    public int compareTo(Nodo<T1> o, boolean str) {
+        if (str) {
+            return Double.compare(this.getStrength(), o.strength);
+        }
+        else {
+            return Integer.compare(this.getGrado(), o.grado);
+        }
     }
 
     /**
