@@ -7,8 +7,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Grafo<T1> {
-    private ArrayList<Nodo<T1>> listaNodos;
+public class Grafo<T> {
+    private ArrayList<Nodo<T>> listaNodos;
     private int nNodos;
 
     /**
@@ -46,10 +46,10 @@ public class Grafo<T1> {
      * Copy constructor
      * @param other Grafo a copiar
      */
-    public Grafo(Grafo<T1> other) {
+    public Grafo(Grafo<T> other) {
         this.nNodos = other.nNodos;
         this.listaNodos = new ArrayList<>();
-        for (Nodo<T1> n: other.listaNodos) {
+        for (Nodo<T> n: other.listaNodos) {
             if (n!=null) {
                 this.listaNodos.add(new Nodo<>(n));
             }
@@ -86,8 +86,8 @@ public class Grafo<T1> {
      * @param id identificador
      * @param info informacion extra TAG
      */
-    public void addNodo(int id, T1 info) {
-        Nodo<T1> temp = new Nodo<>(id, info);
+    public void addNodo(int id, T info) {
+        Nodo<T> temp = new Nodo<>(id, info);
         if (id > nNodos) {
             System.out.println("Nodo Fuera de limites. ID = " + id);
         }
@@ -149,7 +149,7 @@ public class Grafo<T1> {
      * getter listaNodos
      * @return listaNodos
      */
-    public ArrayList<Nodo<T1>> getListaNodos() {
+    public ArrayList<Nodo<T>> getListaNodos() {
         return listaNodos;
     }
 
