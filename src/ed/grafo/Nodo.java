@@ -44,9 +44,7 @@ public class Nodo<T> {
      * metodo que retorna el grado del nodo
      * @return grado del nodo
      */
-    public int gradoNodo(){
-        return this.listaDeEnlaces.size();
-    }
+    public int gradoNodo(){ return this.listaDeEnlaces.size(); }
 
     /**
      * metodo que me retorna el peso total de todos los enlaces del nodo

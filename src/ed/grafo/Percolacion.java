@@ -205,10 +205,10 @@ public class Percolacion<T> {
                         case 2: // metodo strength
                             nodoEliminado = this.eliminarNodoStr();
                             break;
-                        case 3: // metodo grado con heap //TODO
+                        case 3: // metodo grado con heap
                             nodoEliminado = this.eliminarNodoHeapGrado();
                             break;
-                        case 4: // metodo strength con heap //TODO
+                        case 4: // metodo strength con heap
                             nodoEliminado = this.eliminarNodoHeapStr();
                             break;
                         default:
