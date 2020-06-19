@@ -7,6 +7,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @param <T> Tipo especifico de Nodo
+ */
 public class Grafo<T> {
     private ArrayList<Nodo<T>> listaNodos;
     private int nNodos;
