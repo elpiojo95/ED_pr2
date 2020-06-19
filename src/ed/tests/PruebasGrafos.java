@@ -9,19 +9,15 @@ public class PruebasGrafos {
     public static void main(String[] args) {
         //Ficheros
         String[] nets = new String[9];
-        nets[0] = "networks\\basico.net";
+        nets[0] = "networks\\nets_test\\basico.net";
         nets[1] = "networks\\airports_UW.net";
         nets[2] = "networks\\email_URV-edges_betw.net";
         nets[3] = "networks\\powergrid_USA-edges_betw.net";
         nets[4] = "networks\\wtw2000-sym.net";
-        nets[5] = "networks\\enlaces_repetidos.net";
-        nets[6] = "networks\\nodo_origen_no_creado.net";
-        nets[7] = "networks\\nodo_destino_no_creado.net";
-        nets[8] = "networks\\errores.net";
-
-        //Crear Grafo
-        //Grafo<NullType> grafoTest1 = new Grafo<NullType>(nets[6]);
-        //Grafo<NullType> grafoTest1 = new Grafo<NullType>(3);
+        nets[5] = "networks\\nets_test\\enlaces_repetidos.net";
+        nets[6] = "networks\\nets_test\\nodo_origen_no_creado.net";
+        nets[7] = "networks\\nets_test\\nodo_destino_no_creado.net";
+        nets[8] = "networks\\nets_test\\errores.net";
 
         /*
          * Test1: funcionamiento correcto
@@ -91,10 +87,5 @@ public class PruebasGrafos {
         System.out.println("errores.net");
         Grafo<NullType> gTest7 = new Grafo<>(nets[8]);
         System.out.println(gTest7.toString());
-
-        System.out.println("PERCOLACION TEST");
-        //Percolacion<NullType> p = new Percolacion<>(gTest1);
-
-
     }
 }

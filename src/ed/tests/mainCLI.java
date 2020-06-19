@@ -20,7 +20,7 @@ public class mainCLI {
         //Inicializaciones
         //Ficheros
         String[] nets = new String[5];
-        nets[0] = "networks\\basico.net";
+        nets[0] = "networks\\nets_test\\basico.net";
         nets[1] = "networks\\airports_UW.net";
         nets[2] = "networks\\email_URV-edges_betw.net";
         nets[3] = "networks\\powergrid_USA-edges_betw.net";
