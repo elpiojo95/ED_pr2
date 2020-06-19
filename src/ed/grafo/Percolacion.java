@@ -147,22 +147,24 @@ public class Percolacion<T> {
     /**
      * Metodo que calcula todos los valores de la percolacion
      */
-    private void evaluar() {
+    public void evaluar() {
         this.op = 0; this.ncc = 0; this.gcc = 0; this.slcc = 0;
         // Calcular op
         this.op = (double) nNodosActivos/g.getnNodos();
         //DFS
         ArrayList<Integer> explorados = new ArrayList<>();
-        for (int i = 1; i < listaNodosActivos.size(); i++) {
+        //System.out.println(listaNodosActivos.size());
+        for (int i = 0; i < listaNodosActivos.size(); i++) {
             Stack<Nodo<T>> s = new Stack<>();
             int cc = 0;
             if (!explorados.contains(listaNodosActivos.get(i))) {
-                Nodo<T> n = g.getListaNodos().get(i);
+                Nodo<T> n = g.getListaNodos().get(i+1);
                 s.push(n);
                 while (!s.empty()) {
                     n = s.pop();
                     if (!explorados.contains(n.getId())) {
                         explorados.add(n.getId());
+                        //System.out.println(n.getId());
                         cc++;
                         for (Enlace enclace : n.getListaDeEnlaces()) {
                             s.push(g.getListaNodos().get(enclace.getNodoB()));
@@ -172,7 +174,10 @@ public class Percolacion<T> {
                 this.ncc++;
                 this.actualizarGccSlcc(cc);
             }
-        }
+        }/*
+        System.out.println("tot nodos:" +g.getnNodos());
+        System.out.println("tot activos:" +nNodosActivos);
+        System.out.println("ncc:" +this.ncc);*/
         this.ncc = (this.ncc+g.getnNodos()-nNodosActivos)/g.getnNodos();
     }
 
@@ -237,5 +242,21 @@ public class Percolacion<T> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public double getOp() {
+        return op;
+    }
+
+    public double getNcc() {
+        return ncc;
+    }
+
+    public double getGcc() {
+        return gcc;
+    }
+
+    public double getSlcc() {
+        return slcc;
     }
 }
