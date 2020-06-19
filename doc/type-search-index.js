@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"ed.grafo","l":"Enlace"},{"p":"ed.grafo","l":"Grafo"},{"p":"ed.grafo","l":"MaxHeap"},{"p":"ed.grafo","l":"Nodo"},{"p":"ed.grafo","l":"Percolacion"}]
