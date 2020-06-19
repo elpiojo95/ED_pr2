@@ -55,7 +55,7 @@ public class Percolacion<T> {
      * @return idNodoEliminado
      */
     private int eliminarNodoGrado() {
-        int idNodoEliminado = 0, maxGrado = 0, j = 0;
+        int idNodoEliminado = 0, maxGrado = 0;
         //encontrar id nodo con mas grado y actualizar la listaNodosActivos
         for (int i = 0; i < this.nNodosActivos ; i++) {
             int idnodo = this.listaNodosActivos.get(i);
@@ -75,7 +75,7 @@ public class Percolacion<T> {
      */
     private int eliminarNodoStr() {
         //encontrar idNodo con mas strength y actualizar listaNodosActivos
-        int idNodoEliminado = 0, j = 0;
+        int idNodoEliminado = 0;
         double maxStr = 0;
         for (int i = 0; i < this.nNodosActivos; i++) {
             int idnodo = this.listaNodosActivos.get(i);
