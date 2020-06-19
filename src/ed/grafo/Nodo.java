@@ -2,10 +2,13 @@ package ed.grafo;
 
 import java.util.LinkedList;
 
-public class Nodo<T1> {
+/**
+ * @param <T> Tipo especifico de Nodo
+ */
+public class Nodo<T> {
 
     private int id;
-    private T1 info;
+    private T info;
     private LinkedList<Enlace> listaDeEnlaces;
     private int grado;
     private double strength;
@@ -15,7 +18,7 @@ public class Nodo<T1> {
      * @param id identificador nodo
      * @param info informacion extra del nodo TAG
      */
-    public Nodo(int id, T1 info) {
+    public Nodo(int id, T info) {
         this.id = id;
         this.info = info;
         this.listaDeEnlaces = new LinkedList<>();
@@ -27,7 +30,7 @@ public class Nodo<T1> {
      * Copy Constructor
      * @param n: nodo
      */
-    public Nodo (Nodo<T1> n) {
+    public Nodo (Nodo<T> n) {
         if (n != null) {
             this.id = n.id;
             this.info = n.info;
@@ -57,18 +60,30 @@ public class Nodo<T1> {
         return pesoTot;
     }
 
+    /**
+     * metodo par eliminar todos los enlaces
+     */
     public void eliminarEnlaces(){
         this.listaDeEnlaces.clear();
         this.grado = 0;
         this.strength = 0;
     }
 
+    /**
+     * metodo para añadir un enlace
+     * @param enlace Enlace
+     */
     public void anadirEnlace(Enlace enlace){
         this.grado++;
         this.strength += enlace.getPeso();
         this.listaDeEnlaces.add(enlace);
     }
 
+    /**
+     * Metodo para consultar si tiene un enlace con el nodo
+     * @param idNodoB Nodo destino
+     * @return bolean
+     */
     public boolean existeEnlace(int idNodoB){
         if (this.listaDeEnlaces.size() == 0) return false;
         for (Enlace listaDeEnlace : this.listaDeEnlaces) {
@@ -77,10 +92,17 @@ public class Nodo<T1> {
         return false;
     }
 
-    public int idNodoDestino(int idx){
-        return this.listaDeEnlaces.get(idx).getNodoB();
-    }
+    /**
+     * Metodo para obtener el id del nodo en la posicion
+     * @param idx posicion
+     * @return id
+     */
+    public int idNodoDestino(int idx){ return this.listaDeEnlaces.get(idx).getNodoB(); }
 
+    /**
+     * metodo para eliminar el enlace con un nodo
+     * @param idNodo Nodo destino
+     */
     public void eliminarEnlace(int idNodo){
         int i = 0;
         while (this.idNodoDestino(i) != idNodo){
@@ -95,44 +117,46 @@ public class Nodo<T1> {
      * getter Id del nodo
      * @return id
      */
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     /**
      * getter información del nodo
      * @return info
      */
-    public T1 getInfo() {
-        return info;
-    }
+    public T getInfo() { return info; }
 
     /**
      * getter grado del nodo
      * @return grado
      */
-    public int getGrado() {
-        return grado;
-    }
+    public int getGrado() { return grado; }
 
     /**
      * getter del strength del nodo
      * @return strength
      */
-    public double getStrength() {
-        return strength;
-    }
+    public double getStrength() { return strength; }
 
-    public LinkedList<Enlace> getListaDeEnlaces() {
-        return listaDeEnlaces;
-    }
+    /**
+     * getter de listaDeEnlaces
+     * @return LinkedList<Enlace>
+     */
+    public LinkedList<Enlace> getListaDeEnlaces() { return listaDeEnlaces; }
 
-    public int compareTo(Nodo<T1> o, boolean str) {
+    /**
+     * Metodo que compara dos nodos
+     * @param n Nodo
+     * @param str
+     * <p> true STR
+     * <p> false Grado
+     * @return <p> -1 0 2
+     */
+    public int compareTo(Nodo<T> n, boolean str) {
         if (str) {
-            return Double.compare(this.getStrength(), o.strength);
+            return Double.compare(this.getStrength(), n.strength);
         }
         else {
-            return Integer.compare(this.getGrado(), o.grado);
+            return Integer.compare(this.getGrado(), n.grado);
         }
     }
 
