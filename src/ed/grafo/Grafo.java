@@ -111,8 +111,9 @@ public class Grafo<T> {
 
     /**
      * Metodo para añadir un enlace entre dos nodos
+     * @param nodoA origen
      * @param nodoB destino
-     * @param peso peso
+     * @param peso peso del enlace
      */
     public void addEnlace(int nodoA, int nodoB, Double peso) {
         Enlace temp = new Enlace(nodoB, peso);
@@ -135,6 +136,7 @@ public class Grafo<T> {
      * Metodo para comprovar si este enlace existe
      * @param idNodoA origen
      * @param idNodoB destino
+     * @return Boolean
      */
     public Boolean enlaceExiste(int idNodoA, int idNodoB){
         return this.listaNodos.get(idNodoA).existeEnlace(idNodoB);

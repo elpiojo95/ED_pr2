@@ -137,7 +137,7 @@ public class Nodo<T> {
 
     /**
      * getter de listaDeEnlaces
-     * @return LinkedList<Enlace>
+     * @return LinkedList
      */
     public LinkedList<Enlace> getListaDeEnlaces() { return listaDeEnlaces; }
 
