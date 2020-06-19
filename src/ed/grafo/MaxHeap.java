@@ -52,23 +52,6 @@ public class MaxHeap<T> {
         }
     }
 
-    private void descender() {
-        int idx = 1;
-        while (this.tieneIzqHijo(idx)){
-            int grande = this.izqHijo(idx);
-            if (tieneDchHijo(idx) && this.heap.get(izqHijo(idx)).compareTo(this.heap.get(dchHijo(idx)), tipo) < 0)
-            {
-                grande = this.dchHijo(idx);
-            }
-            if (this.heap.get(idx).compareTo(this.heap.get(grande), tipo) < 0)
-            {
-                Collections.swap(this.heap, idx, grande);
-            }
-            else break;
-            idx = grande;
-        }
-    }
-
     public void descender(Nodo<T> n) {
         int idx = this.heap.indexOf(n);
         while (this.tieneIzqHijo(idx)){
@@ -94,7 +77,9 @@ public class MaxHeap<T> {
     public void eliminar() {
         Collections.swap(this.heap, 1, this.heap.size()-1);
         this.heap.remove(heap.size()-1);
-        this.descender();
+        if (!this.isVacio()) {
+            this.descender(this.heap.get(1));
+        }
     }
 
     public Nodo<T> ver() {
