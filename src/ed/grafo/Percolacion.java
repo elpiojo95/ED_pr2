@@ -4,6 +4,9 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Stack;
 
+/**
+ * @param <T> Tipo especifico de Nodo
+ */
 public class Percolacion<T> {
     private Grafo<T> g;
     private ArrayList<Integer> listaNodosActivos;
@@ -36,7 +39,7 @@ public class Percolacion<T> {
 
     /**
      * Metodo que elimina un nodo aleatorio
-     * @return id del nodo eliminado
+     * @return idNodoEliminado
      */
     private int eliminarNodoAleatorio() {
         //generar el nodo aleatorio i actualizar la lista de nodos activos
@@ -49,7 +52,7 @@ public class Percolacion<T> {
 
     /**
      * Metodo que busca el nodo de mayor grado y lo elimina
-     * @return id del nodo eliminado
+     * @return idNodoEliminado
      */
     private int eliminarNodoGrado() {
         int idNodoEliminado = 0, maxGrado = 0, j = 0;
@@ -68,7 +71,7 @@ public class Percolacion<T> {
 
     /**
      * Metodo que busca el nodo de mayor strength y lo elimina
-     * @return id del nodo eliminado
+     * @return idNodoEliminado
      */
     private int eliminarNodoStr() {
         //encontrar idNodo con mas strength y actualizar listaNodosActivos
@@ -86,6 +89,10 @@ public class Percolacion<T> {
         return idNodoEliminado;
     }
 
+    /**
+     * Metodo para eliminar el nodo de mas grado mediante heap
+     * @return idNodoEliminado
+     */
     private int eliminarNodoHeapGrado() {
         if (heap == null) {
             this.heap = new MaxHeap<>(false);
@@ -102,6 +109,10 @@ public class Percolacion<T> {
         return idNodoEliminado;
     }
 
+    /**
+     * Metodo para eliminar el nodo de mas str mediante heap
+     * @return idNodoEliminado
+     */
     private int eliminarNodoHeapStr() {
         if (heap == null) {
             this.heap = new MaxHeap<>(false);
