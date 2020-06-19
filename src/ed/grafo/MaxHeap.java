@@ -54,6 +54,7 @@ public class MaxHeap<T> {
 
     public void descender(Nodo<T> n) {
         int idx = this.heap.indexOf(n);
+        if (idx < 0) return;
         while (this.tieneIzqHijo(idx)){
             int grande = this.izqHijo(idx);
             if (tieneDchHijo(idx) && this.heap.get(izqHijo(idx)).compareTo(this.heap.get(dchHijo(idx)), tipo) < 0)
