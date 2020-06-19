@@ -98,7 +98,22 @@ public class Percolacion<T> {
         if (!heap.isVacio()) {
             idNodoEliminado = heap.verYeliminar().getId();
         }
-        System.out.println(g.getListaNodos().get(idNodoEliminado).getGrado());
+        this.listaNodosActivos.remove((Integer) idNodoEliminado);
+        return idNodoEliminado;
+    }
+
+    private int eliminarNodoHeapStr() {
+        if (heap == null) {
+            this.heap = new MaxHeap<>(false);
+            for (int i = 1; i <= g.getnNodos() ; i++) {
+                this.heap.add(g.getListaNodos().get(i));
+            }
+        }
+        int idNodoEliminado = 0;
+        this.nNodosActivos--;
+        if (!heap.isVacio()) {
+            idNodoEliminado = heap.verYeliminar().getId();
+        }
         this.listaNodosActivos.remove((Integer) idNodoEliminado);
         return idNodoEliminado;
     }
@@ -183,7 +198,7 @@ public class Percolacion<T> {
                             nodoEliminado = this.eliminarNodoHeapGrado();
                             break;
                         case 4: // metodo strength con heap //TODO
-                            nodoEliminado = this.eliminarNodoAleatorio();
+                            nodoEliminado = this.eliminarNodoHeapStr();
                             break;
                         default:
                             nodoEliminado = this.eliminarNodoAleatorio();
